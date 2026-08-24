@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin:0; padding:0; background:#0A0F23; }
+    a { color:#E8C56A; } a:hover { color:#F6D98C; }
+    ::selection { background:rgba(232,197,106,0.3); }
+    @keyframes emberFloat { 0%{ transform:translateY(0); opacity:0; } 12%{ opacity:0.8; } 88%{ opacity:0.5; } 100%{ transform:translateY(-92vh); opacity:0; } }
+    @keyframes fadeUp { from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+    @keyframes modalIn { from{ opacity:0; transform:translateY(26px) scale(0.98); } to{ opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes glowPulse { 0%,100%{ opacity:0.55; } 50%{ opacity:1; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; font-family:'PT Sans',sans-serif; color:#EDE6D3; position:relative; overflow-x:clip;">
+
+  <!-- ===== Background layers ===== -->
+  <div style="position:fixed; inset:0; z-index:0; background: radial-gradient(1200px 700px at 75% -10%, rgba(46,68,130,0.55), transparent 60%), radial-gradient(900px 600px at 10% 110%, rgba(140,62,44,0.28), transparent 60%), linear-gradient(180deg, #0A0F23 0%, #0C1330 55%, #0A0E1F 100%);"></div>
+  <div ref="{{ornRef1}}" style="position:fixed; inset:-20% 0; z-index:0; opacity:0.07; background-image:url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22 viewBox=%220 0 180 180%22%3E%3Cg fill=%22none%22 stroke=%22%23E8C56A%22 stroke-width=%222.5%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M90 30 C60 30 48 58 62 76 C72 89 92 84 92 68 C92 58 82 55 77 62%22/%3E%3Cpath d=%22M90 30 C120 30 132 58 118 76 C108 89 88 84 88 68 C88 58 98 55 103 62%22 transform=%22translate(180 0) scale(-1 1)%22/%3E%3Cpath d=%22M90 150 C60 150 48 122 62 104 C72 91 92 96 92 112 C92 122 82 125 77 118%22/%3E%3Cpath d=%22M90 150 C120 150 132 122 118 104 C108 91 88 96 88 112 C88 122 98 125 103 118%22 transform=%22translate(180 0) scale(-1 1)%22/%3E%3Crect x=%2284%22 y=%2284%22 width=%2212%22 height=%2212%22 transform=%22rotate(45 90 90)%22/%3E%3C/g%3E%3C/svg%3E'); background-size:180px 180px;"></div>
+  <div ref="{{ornRef2}}" style="position:fixed; inset:-30% 0; z-index:0; opacity:0.045; background-image:url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22420%22 height=%22420%22 viewBox=%220 0 180 180%22%3E%3Cg fill=%22none%22 stroke=%22%23E8C56A%22 stroke-width=%221.6%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M90 30 C60 30 48 58 62 76 C72 89 92 84 92 68 C92 58 82 55 77 62%22/%3E%3Cpath d=%22M90 150 C120 150 132 122 118 104 C108 91 88 96 88 112 C88 122 98 125 103 118%22/%3E%3C/g%3E%3C/svg%3E'); background-size:420px 420px;"></div>
+
+  <sc-if value="{{embersOn}}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed; inset:0; z-index:0; pointer-events:none;">
+      <span style="position:absolute; left:12%; bottom:-10px; width:4px; height:4px; border-radius:50%; background:#F0C96A; box-shadow:0 0 8px 2px rgba(240,201,106,0.6); animation:emberFloat 16s linear infinite;"></span>
+      <span style="position:absolute; left:28%; bottom:-10px; width:3px; height:3px; border-radius:50%; background:#E8C56A; box-shadow:0 0 6px 2px rgba(240,201,106,0.5); animation:emberFloat 21s linear 3s infinite;"></span>
+      <span style="position:absolute; left:47%; bottom:-10px; width:5px; height:5px; border-radius:50%; background:#F6D98C; box-shadow:0 0 10px 3px rgba(240,201,106,0.55); animation:emberFloat 18s linear 7s infinite;"></span>
+      <span style="position:absolute; left:66%; bottom:-10px; width:3px; height:3px; border-radius:50%; background:#E8C56A; box-shadow:0 0 6px 2px rgba(240,201,106,0.5); animation:emberFloat 24s linear 2s infinite;"></span>
+      <span style="position:absolute; left:81%; bottom:-10px; width:4px; height:4px; border-radius:50%; background:#F0C96A; box-shadow:0 0 8px 2px rgba(240,201,106,0.6); animation:emberFloat 19s linear 10s infinite;"></span>
+      <span style="position:absolute; left:92%; bottom:-10px; width:3px; height:3px; border-radius:50%; background:#F6D98C; box-shadow:0 0 6px 2px rgba(240,201,106,0.45); animation:emberFloat 26s linear 5s infinite;"></span>
+    </div>
+  </sc-if>
+
+  <!-- ===== Header ===== -->
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:20; backdrop-filter:blur(14px); background:rgba(10,15,35,0.75); border-bottom:1px solid rgba(232,197,106,0.18);">
+    <div style="max-width:1180px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <svg width="42" height="42" viewBox="0 0 42 42" style="flex-shrink:0;">
+          <circle cx="21" cy="21" r="18" fill="none" stroke="#E8C56A" stroke-width="2"></circle>
+          <circle cx="21" cy="21" r="11" fill="none" stroke="#E8C56A" stroke-width="1.2" opacity="0.7"></circle>
+          <path d="M21 3 L21 39 M3 21 L39 21 M8.3 8.3 L33.7 33.7 M33.7 8.3 L8.3 33.7" stroke="#E8C56A" stroke-width="1.2" opacity="0.7"></path>
+        </svg>
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:24px; font-weight:700; color:#F2E7C9; letter-spacing:0.5px;">Tarih<span style="color:#E8C56A;">Talk</span></div>
+          <div style="font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:#9AA3C0;">Жылдар сөйлейді</div>
+        </div>
+      </div>
+      <div style="flex:1;"></div>
+      <input value="{{query}}" onChange="{{onQuery}}" placeholder="Жыл немесе оқиға іздеу…" style="background:rgba(21,30,58,0.8); border:1px solid rgba(232,197,106,0.25); border-radius:999px; padding:10px 18px; color:#EDE6D3; font-family:'PT Sans',sans-serif; font-size:14px; width:min(260px, 60vw); outline:none;">
+      <sc-if value="{{showProgressOn}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:5px; min-width:120px;">
+          <div style="font-size:12px; color:#9AA3C0;">Прогресс: <span style="color:#F0C96A; font-weight:700;">{{doneTotal}}</span> / {{yearTotal}} жыл</div>
+          <div style="height:4px; border-radius:2px; background:rgba(232,197,106,0.15); overflow:hidden;"><div style="height:100%; border-radius:2px; background:linear-gradient(90deg,#B4543E,#E8C56A); width:{{progressPct}};"></div></div>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <!-- ===== Grade tabs ===== -->
+  <nav data-screen-label="Grade tabs" style="position:relative; z-index:10; max-width:1180px; margin:26px auto 0; padding:0 24px; display:flex; gap:10px; flex-wrap:wrap;">
+    <sc-for list="{{grades}}" as="g" hint-placeholder-count="7">
+      <button onClick="{{g.open}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:10px 20px; border-radius:999px; transition:all 0.25s ease; background:{{g.bg}}; color:{{g.fg}}; border:1px solid {{g.bd}};" style-hover="border-color:rgba(232,197,106,0.7);">{{g.label}}-сынып</button>
+    </sc-for>
+  </nav>
+
+  <!-- ===== Era hero ===== -->
+  <section data-screen-label="Era hero" style="position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:44px 24px 10px;">
+    <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+      <h1 style="margin:0; font-family:'Playfair Display',serif; font-size:clamp(30px,4.5vw,46px); font-weight:700; color:#F2E7C9;">{{eraTitle}}</h1>
+      <div style="font-family:'Cinzel',serif; font-size:clamp(17px,2vw,22px); color:#E8C56A; letter-spacing:2px;">{{eraRange}}</div>
+    </div>
+    <p style="margin:12px 0 0; max-width:640px; font-size:16.5px; line-height:1.65; color:#B9C0D8;">{{eraIntro}}</p>
+    <div style="margin-top:14px; display:flex; align-items:center; gap:10px; font-size:13.5px; color:#9AA3C0;">
+      <span style="display:inline-block; width:8px; height:8px; transform:rotate(45deg); background:#E8C56A;"></span>
+      Бұл сыныпта: <span style="color:#F0C96A; font-weight:700;">{{gradeDone}}</span>&nbsp;/ {{gradeCount}} жыл өтілді
+    </div>
+  </section>
+
+  <!-- ===== Search results ===== -->
+  <sc-if value="{{searching}}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Search results" style="position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:20px 24px 80px;">
+      <div style="font-size:14px; color:#9AA3C0; margin-bottom:18px;">Іздеу нәтижелері: <span style="color:#F0C96A; font-weight:700;">{{resultCount}}</span></div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{results}}" as="r" hint-placeholder-count="2">
+          <div onClick="{{r.open}}" style="cursor:pointer; display:flex; align-items:center; gap:18px; padding:16px 20px; border-radius:14px; background:rgba(21,30,58,0.7); border:1px solid rgba(232,197,106,0.2); transition:all 0.2s ease;" style-hover="border-color:rgba(232,197,106,0.6); background:rgba(28,38,72,0.85);">
+            <div style="font-family:'Cinzel',serif; font-size:26px; font-weight:600; color:#E8C56A; min-width:96px;">{{r.display}}</div>
+            <div style="flex:1;">
+              <div style="font-family:'Playfair Display',serif; font-size:17px; color:#F2E7C9;">{{r.title}}</div>
+              <div style="font-size:13px; color:#9AA3C0; margin-top:2px;">{{r.gradeLabel}}-сынып · {{r.era}}</div>
+            </div>
+            <div style="color:#E8C56A; font-size:18px;">→</div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{noResults}}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px 0; text-align:center; color:#9AA3C0; font-size:15px;">Ештеңе табылмады. Басқа жыл немесе сөз енгізіп көріңіз.</div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <!-- ===== Timeline ===== -->
+  <sc-if value="{{notSearching}}" hint-placeholder-val="{{ true }}">
+    <main data-screen-label="Timeline" style="position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:30px 24px 100px;">
+      <div style="position:relative; padding-left:clamp(26px, 6vw, 70px);">
+        <!-- vertical line -->
+        <div style="position:absolute; left:clamp(8px, 3vw, 34px); top:0; bottom:0; width:2px; background:linear-gradient(180deg, transparent, rgba(232,197,106,0.55) 6%, rgba(232,197,106,0.55) 94%, transparent);"></div>
+
+        <div style="display:flex; flex-direction:column; gap:clamp(48px, 7vw, 84px);">
+          <sc-for list="{{years}}" as="y" hint-placeholder-count="4">
+            <div style="position:relative; animation:fadeUp 0.6s ease both;">
+              <!-- node on the line -->
+              <div style="position:absolute; left:calc(clamp(8px, 3vw, 34px) - clamp(26px, 6vw, 70px) - 7px); top:26px; width:16px; height:16px; transform:rotate(45deg); background:{{y.nodeBg}}; border:2px solid #E8C56A; box-shadow:0 0 12px rgba(232,197,106,0.5);"></div>
+
+              <!-- giant numeral -->
+              <div onClick="{{y.open}}" style="cursor:pointer; display:inline-block; font-family:'Cinzel',serif; font-weight:700; font-size:clamp(58px, 9vw, 118px); line-height:1; color:#E8C56A; text-shadow:0 0 18px rgba(232,197,106,0.25); letter-spacing:2px; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), text-shadow 0.35s ease, color 0.35s ease; user-select:none;" style-hover="transform:scale(1.06) rotate(-1.5deg); color:#F6D98C; text-shadow:0 0 26px rgba(240,201,106,0.85), 0 0 70px rgba(240,201,106,0.35);">{{y.display}}</div>
+
+              <!-- card -->
+              <div onClick="{{y.open}}" style="cursor:pointer; margin-top:-14px; margin-left:clamp(10px, 3vw, 42px); max-width:620px; background:rgba(21,30,58,0.72); backdrop-filter:blur(8px); border:1px solid rgba(232,197,106,0.22); border-radius:16px; padding:20px 24px; transition:all 0.25s ease; position:relative;" style-hover="border-color:rgba(232,197,106,0.6); transform:translateY(-3px); box-shadow:0 14px 40px rgba(0,0,0,0.4);">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                  <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:600; color:#F2E7C9;">{{y.title}}</div>
+                  <sc-if value="{{y.done}}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:12px; font-weight:700; color:#0A0F23; background:#E8C56A; border-radius:999px; padding:3px 10px;">✓ Өтілді</span>
+                  </sc-if>
+                </div>
+                <p style="margin:8px 0 14px; font-size:14.5px; line-height:1.6; color:#B9C0D8;">{{y.teaser}}</p>
+                <div style="display:flex; align-items:center; gap:8px; font-size:13.5px; font-weight:700; color:#E8C56A; letter-spacing:0.5px;">
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; border:1px solid rgba(232,197,106,0.5); font-size:10px;">▶</span>
+                  Жыл сөйлейді — тыңдау
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ===== Footer ===== -->
+  <footer style="position:relative; z-index:5; border-top:1px solid rgba(232,197,106,0.15); padding:26px 24px; text-align:center; font-size:13px; color:#7A83A3;">
+    TarihTalk · Қазақстан тарихы, 5–11 сынып · «Жылдар сөйлейді»
+  </footer>
+
+  <!-- ===== Modal ===== -->
+  <sc-if value="{{modalOpen}}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{closeModal}}" style="position:fixed; inset:0; z-index:50; background:rgba(5,8,20,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:20px;">
+      <div data-screen-label="Year modal" onClick="{{stop}}" style="width:min(720px, 96vw); max-height:88vh; overflow-y:auto; background:linear-gradient(180deg, #131C38, #0E1530); border:1px solid rgba(232,197,106,0.4); border-radius:20px; padding:clamp(20px,4vw,36px); position:relative; animation:modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both; box-shadow:0 30px 90px rgba(0,0,0,0.6);">
+
+        <button onClick="{{closeModal}}" style="position:absolute; top:14px; right:14px; cursor:pointer; width:36px; height:36px; border-radius:50%; background:rgba(232,197,106,0.1); border:1px solid rgba(232,197,106,0.35); color:#E8C56A; font-size:17px; line-height:1;" style-hover="background:rgba(232,197,106,0.25);">✕</button>
+
+        <!-- modal header -->
+        <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; padding-right:40px;">
+          <div style="font-family:'Cinzel',serif; font-size:clamp(38px,6vw,56px); font-weight:700; color:#E8C56A; text-shadow:0 0 22px rgba(232,197,106,0.35); line-height:1;">{{sel.display}}</div>
+          <div>
+            <div style="font-family:'Playfair Display',serif; font-size:clamp(19px,3vw,24px); font-weight:600; color:#F2E7C9;">{{sel.title}}</div>
+            <div style="font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; color:#9AA3C0; margin-top:3px;">{{sel.era}} · {{sel.gradeLabel}}-сынып</div>
+          </div>
+        </div>
+        <div style="height:1px; background:linear-gradient(90deg, rgba(232,197,106,0.5), transparent); margin:18px 0 22px;"></div>
+
+        <!-- STEP: learn -->
+        <sc-if value="{{stepLearn}}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="aspect-ratio:16/9; border-radius:14px; border:1.5px dashed rgba(232,197,106,0.45); background: radial-gradient(500px 260px at 50% 40%, rgba(46,68,130,0.5), rgba(10,15,35,0.9)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; padding:20px;">
+              <div style="width:64px; height:64px; border-radius:50%; background:rgba(232,197,106,0.14); border:2px solid #E8C56A; display:flex; align-items:center; justify-content:center; font-size:22px; color:#F0C96A; animation:glowPulse 2.4s ease infinite;">▶</div>
+              <div style="font-family:'Playfair Display',serif; font-size:17px; color:#F2E7C9;">AI бейне-кеңес: {{sel.display}} — {{sel.title}}</div>
+              <div style="font-size:13px; color:#9AA3C0;">Бейне осы жерге қосылады (YouTube / mp4)</div>
+            </div>
+
+            <h3 style="margin:26px 0 4px; font-family:'Playfair Display',serif; font-size:20px; color:#F0C96A; display:flex; align-items:center; gap:10px;"><span style="display:inline-block; width:8px; height:8px; transform:rotate(45deg); background:#E8C56A;"></span>Жаңа білім</h3>
+            <p style="margin:6px 0 14px; font-size:15px; line-height:1.7; color:#CBD1E4;">{{sel.summary}}</p>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{selFacts}}" as="f" hint-placeholder-count="3">
+                <div style="display:flex; gap:12px; align-items:flex-start; background:rgba(21,30,58,0.55); border:1px solid rgba(232,197,106,0.15); border-radius:10px; padding:12px 16px; font-size:14.5px; line-height:1.6; color:#DDE2F0;">
+                  <span style="color:#E8C56A; font-weight:700; flex-shrink:0;">❖</span>
+                  <span>{{f.text}}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px;">
+              <div style="aspect-ratio:4/3; border-radius:10px; border:1.5px dashed rgba(232,197,106,0.3); display:flex; align-items:center; justify-content:center; color:#9AA3C0; font-size:13px;">🗺 Карта орны</div>
+              <div style="aspect-ratio:4/3; border-radius:10px; border:1.5px dashed rgba(232,197,106,0.3); display:flex; align-items:center; justify-content:center; color:#9AA3C0; font-size:13px;">🖼 Сурет орны</div>
+            </div>
+
+            <button onClick="{{toQuiz}}" style="margin-top:24px; width:100%; cursor:pointer; font-family:'PT Sans',sans-serif; font-size:16px; font-weight:700; padding:15px; border-radius:12px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23; letter-spacing:0.5px; transition:all 0.2s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 30px rgba(232,197,106,0.3);">Әрі қарай → Тестке өту</button>
+          </div>
+        </sc-if>
+
+        <!-- STEP: quiz -->
+        <sc-if value="{{stepQuiz}}" hint-placeholder-val="{{ false }}">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div style="font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:#9AA3C0;">Сұрақ {{qNum}} / {{qTotal}}</div>
+              <div style="font-size:13px; color:#E8C56A; font-weight:700;">Ұпай: {{score}}</div>
+            </div>
+            <div style="height:4px; border-radius:2px; background:rgba(232,197,106,0.15); overflow:hidden; margin-bottom:20px;"><div style="height:100%; background:linear-gradient(90deg,#B4543E,#E8C56A); width:{{quizPct}}; transition:width 0.3s;"></div></div>
+
+            <div style="font-family:'Playfair Display',serif; font-size:clamp(18px,3vw,22px); line-height:1.5; color:#F2E7C9; margin-bottom:20px;">{{questionText}}</div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+                <button onClick="{{o.pick}}" style="cursor:pointer; text-align:left; font-family:'PT Sans',sans-serif; font-size:15px; line-height:1.5; padding:14px 18px; border-radius:12px; transition:all 0.2s; background:{{o.bg}}; color:{{o.fg}}; border:1.5px solid {{o.bd}};" style-hover="border-color:rgba(232,197,106,0.7);"><span style="font-weight:700; margin-right:10px;">{{o.letter}}</span>{{o.text}}</button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                <div style="font-size:15px; font-weight:700; color:{{feedbackColor}};">{{feedbackText}}</div>
+                <button onClick="{{nextQuestion}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:12px 26px; border-radius:10px; border:1px solid rgba(232,197,106,0.5); background:rgba(232,197,106,0.12); color:#F0C96A; transition:all 0.2s;" style-hover="background:rgba(232,197,106,0.28);">{{nextLabel}}</button>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <!-- STEP: result -->
+        <sc-if value="{{stepDone}}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:16px 0 6px;">
+            <div style="font-family:'Cinzel',serif; font-size:64px; font-weight:700; color:#F0C96A; text-shadow:0 0 30px rgba(240,201,106,0.5); line-height:1;">{{score}}<span style="font-size:30px; color:#9AA3C0;"> / {{qTotal}}</span></div>
+            <div style="font-family:'Playfair Display',serif; font-size:22px; color:#F2E7C9; margin-top:14px;">{{resultTitle}}</div>
+            <p style="font-size:15px; color:#B9C0D8; margin:8px auto 24px; max-width:420px; line-height:1.6;">{{resultMsg}}</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+              <button onClick="{{retryQuiz}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 24px; border-radius:11px; border:1px solid rgba(232,197,106,0.45); background:transparent; color:#E8C56A;" style-hover="background:rgba(232,197,106,0.12);">↺ Қайталау</button>
+              <sc-if value="{{hasNextYear}}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{openNextYear}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 26px; border-radius:11px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23;" style-hover="transform:translateY(-2px); box-shadow:0 10px 26px rgba(232,197,106,0.3);">Келесі жыл: {{nextYearDisplay}} →</button>
+              </sc-if>
+              <sc-if value="{{noNextYear}}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{closeModal}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 26px; border-radius:11px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23;">Дәуірді аяқтау ✓</button>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startGrade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;11&quot;],&quot;default&quot;:&quot;7&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Баптау&quot;},&quot;embers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Баптау&quot;},&quot;showProgress&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Баптау&quot;}}">
+const DATA = [
+  { grade: "5", era: "Ежелгі дәуір", range: "б.з.б. 3500 – б.з.б. 400",
+    intro: "Қазақ даласының ежелгі тарихы: алғашқы жылқы мәдениетінен сақ патшайымдары мен алтын киімді ханзадаларға дейін.",
+    years: [
+      { id: "5-botai", display: "б.з.б. 3500", title: "Ботай мәдениеті", teaser: "Адамзат тарихында жылқы алғаш рет қазақ даласында қолға үйретілді.",
+        summary: "Солтүстік Қазақстандағы Ботай қонысы — жылқы шаруашылығының бесігі. Бұл жаңалық көшпелі өркениеттің негізін қалады.",
+        facts: ["Жылқы алғаш рет осында қолға үйретілді — бұл әлемдік маңызы бар жаңалық.", "Қоныс Солтүстік Қазақстанда, Көкшетау маңында орналасқан.", "Қымыз дайындау дәстүрі осы мәдениеттен бастау алады.", "Қонысты археолог Виктор Зайберт зерттеген."],
+        quiz: [
+          { q: "Ботай мәдениеті немен әйгілі?", o: ["Жылқыны алғаш қолға үйретумен", "Қола құюмен", "Жібек өндірумен", "Қала салумен"], a: 0 },
+          { q: "Ботай қонысы қай өңірде орналасқан?", o: ["Солтүстік Қазақстанда", "Маңғыстауда", "Жетісуда", "Каспий жағалауында"], a: 0 },
+          { q: "Дұрыс па: қымыз дәстүрі Ботай мәдениетінен бастау алады.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "5-tomiris", display: "б.з.б. 530", title: "Томирис пен Кир шайқасы", teaser: "Массагет патшайымы Томирис парсы патшасы II Кирдің әскерін талқандады.",
+        summary: "Ұлы дала тарихындағы ең әйгілі жеңістердің бірі — сақ-массагет патшайымы Томиристің парсы империясына қарсы күресі.",
+        facts: ["Томирис — массагет (сақ) тайпаларының патшайымы.", "Парсы патшасы II Кир жорығы толық жеңіліспен аяқталды.", "Бұл оқиғаны грек тарихшысы Геродот жазып қалдырған."],
+        quiz: [
+          { q: "Томирис қай патшаны жеңді?", o: ["II Кирді", "I Дарийді", "Александр Македонскийді", "Крезді"], a: 0 },
+          { q: "Томирис қай тайпалардың патшайымы болды?", o: ["Массагеттердің", "Ғұндардың", "Үйсіндердің", "Қаңлылардың"], a: 0 },
+          { q: "Бұл шайқас туралы кім жазып қалдырды?", o: ["Геродот", "Страбон", "Сыма Цянь", "Плутарх"], a: 0 }
+        ] },
+      { id: "5-altyn", display: "б.з.б. 400", title: "«Алтын адам» дәуірі", teaser: "Есік қорғанынан табылған сақ ханзадасы — Қазақстанның алтын символы.",
+        summary: "Есік қорғанындағы жерлеу — сақ өркениетінің зергерлік өнері мен дүниетанымының жарқын ескерткіші.",
+        facts: ["«Алтын адам» 1969–70 жылдары Есік қорғанынан табылды.", "Киімінде 4000-нан астам алтын әшекей болған.", "Қазбаны археолог Кемал Ақышев басқарды.", "Табылған күміс тостағанда ежелгі жазу бар."],
+        quiz: [
+          { q: "«Алтын адам» қай қорғаннан табылды?", o: ["Есік қорғанынан", "Берел қорғанынан", "Шілікті қорғанынан", "Пазырық қорғанынан"], a: 0 },
+          { q: "Қазба жұмысын басқарған археолог кім?", o: ["Кемал Ақышев", "Виктор Зайберт", "Әлкей Марғұлан", "Зейнолла Самашев"], a: 0 },
+          { q: "Дұрыс па: киімінде 4 мыңнан астам алтын әшекей болған.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] }
+    ] },
+  { grade: "6", era: "Орта ғасырлар", range: "552 – 1219",
+    intro: "Түрік қағанаттарынан Шыңғыс хан шапқыншылығына дейін: Ұлы Жібек жолы бойындағы мемлекеттер мен шайқастар.",
+    years: [
+      { id: "6-552", display: "552", title: "Түрік қағанатының құрылуы", teaser: "Бумын қаған алғашқы түрік мемлекетінің негізін қалады.",
+        summary: "552 жылы Бумын қаған аварларды жеңіп, Түрік қағанатын құрды — «түрік» атауы тарихқа осылай енді.",
+        facts: ["Негізін салған — Бумын қаған.", "Орталығы Алтай мен Отюкен өңірі болды.", "Қағанат Ұлы Жібек жолын бақылауға алды."],
+        quiz: [
+          { q: "Түрік қағанатының негізін кім салды?", o: ["Бумын қаған", "Естеми қаған", "Білге қаған", "Мұқан қаған"], a: 0 },
+          { q: "Қағанат қай жылы құрылды?", o: ["552 жылы", "603 жылы", "751 жылы", "840 жылы"], a: 0 },
+          { q: "Дұрыс па: қағанат Ұлы Жібек жолын бақылады.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "6-751", display: "751", title: "Атлах шайқасы", teaser: "Талас бойында арабтар мен Қытай империясы соғысты — тағдырды қарлұқтар шешті.",
+        summary: "Атлах шайқасы Орталық Азияның діни-мәдени бағытын анықтады, ал қағаз жасау өнері батысқа тарады.",
+        facts: ["Арабтар (Зияд ибн Салих) мен Тан империясы (Гао Сяньчжи) соғысты.", "Шайқас Талас өзені бойындағы Атлах қаласы маңында өтті.", "Шешуші сәтте қарлұқтар арабтар жағына шықты.", "Тұтқын қытай шеберлері арқылы қағаз өндірісі батысқа тарады."],
+        quiz: [
+          { q: "Атлах шайқасында кімдер соғысты?", o: ["Арабтар мен Қытай империясы", "Түріктер мен парсылар", "Моңғолдар мен қыпшақтар", "Арабтар мен Византия"], a: 0 },
+          { q: "Шайқаста шешуші рөл атқарған тайпа?", o: ["Қарлұқтар", "Оғыздар", "Қимақтар", "Наймандар"], a: 0 },
+          { q: "Дұрыс па: осы шайқастан кейін қағаз өндірісі батысқа тарады.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "6-1219", display: "1219", title: "Отырар қорғанысы", teaser: "Шыңғыс хан шапқыншылығы кезінде Отырар алты ай бойы қаһармандықпен қорғанды.",
+        summary: "1219 жылы Шыңғыс хан жорығы басталды. Отырар қаласы Қайыр хан басшылығымен ұзақ қоршауға төтеп берді.",
+        facts: ["Жорыққа 1218 жылғы «Отырар апаты» — керуеннің талануы — себеп болды.", "Қаланы Қайыр хан (Ғайыр хан) қорғады.", "Отырар қоршауға алты ай бойы төтеп берді."],
+        quiz: [
+          { q: "Отырар қорғанысын кім басқарды?", o: ["Қайыр хан", "Жалаңтөс баһадүр", "Мұхаммед шах", "Жошы хан"], a: 0 },
+          { q: "Отырар қанша уақыт қорғанды?", o: ["Алты ай", "Бір апта", "Бір ай", "Үш жыл"], a: 0 },
+          { q: "Жорыққа не себеп болды?", o: ["Керуеннің талануы («Отырар апаты»)", "Шекара дауы", "Салық төлемеу", "Хан елшісінің қашуы"], a: 0 }
+        ] }
+    ] },
+  { grade: "7", era: "Қазақ хандығы", range: "1465 – 1771",
+    intro: "Керей мен Жәнібек құрған мемлекеттен Абылай хан дәуіріне дейін — қазақ мемлекеттілігінің алтын арқауы.",
+    years: [
+      { id: "7-1465", display: "1465", title: "Қазақ хандығының құрылуы", teaser: "Керей мен Жәнібек сұлтандар Шу мен Талас аңғарында жаңа мемлекеттің туын тікті.",
+        summary: "1465 жылы Керей мен Жәнібек сұлтандар Әбілқайыр хандығынан бөлініп, Қазақ хандығының негізін қалады — қазақ мемлекеттілігінің бастауы.",
+        facts: ["Хандықты Керей мен Жәнібек сұлтандар құрды.", "Мемлекет Шу мен Талас өзендерінің аңғарында пайда болды.", "Алғашқы хан болып Керей жарияланды.", "Бұл оқиғаны Мұхаммед Хайдар Дулати «Тарих-и Рашиди» еңбегінде жазған.", "«Қазақ» атауы «еркін, азат ел» деген мағына береді."],
+        quiz: [
+          { q: "Қазақ хандығын кімдер құрды?", o: ["Керей мен Жәнібек", "Әбілқайыр мен Мұхаммед Шайбани", "Абылай мен Әбілмәмбет", "Тәуке мен Есім"], a: 0 },
+          { q: "Хандық қай өзендердің аңғарында құрылды?", o: ["Шу мен Талас", "Еділ мен Жайық", "Ертіс пен Есіл", "Сырдария мен Әмудария"], a: 0 },
+          { q: "Хандықтың құрылуын жазып қалдырған тарихшы?", o: ["Мұхаммед Хайдар Дулати", "Әл-Фараби", "Рашид ад-Дин", "Захир ад-дин Бабыр"], a: 0 },
+          { q: "Дұрыс па: Қазақ хандығының алғашқы ханы — Керей.", o: ["Дұрыс", "Бұрыс"], a: 0 },
+          { q: "Керей мен Жәнібек кімнің хандығынан бөлініп кетті?", o: ["Әбілқайыр ханның", "Тоқтамыс ханның", "Есен-бұға ханның", "Едіге бидің"], a: 0 }
+        ] },
+      { id: "7-1511", display: "1511", title: "Қасым хан дәуірі", teaser: "«Қасым ханның қасқа жолы» — хандық ең қуатты кезеңіне жетті, халқы 1 миллионға толды.",
+        summary: "Қасым хан (1511–1521) тұсында Қазақ хандығы Еуразиядағы қуатты мемлекетке айналып, Еуропаға алғаш танылды.",
+        facts: ["Хандық халқы 1 миллионға жетті.", "«Қасым ханның қасқа жолы» атты заңдар жинағы қабылданды.", "Хандық шекарасы Еділ бойына дейін кеңейді.", "Мәскеу мемлекетімен дипломатиялық байланыс орнады — хандық Еуропаға танылды."],
+        quiz: [
+          { q: "Қасым хан тұсындағы заңдар жинағы қалай аталды?", o: ["«Қасқа жол»", "«Жеті Жарғы»", "«Ескі жол»", "«Яса»"], a: 0 },
+          { q: "Қасым хан тұсында хандық халқы қанша болды?", o: ["1 миллион", "100 мың", "5 миллион", "10 миллион"], a: 0 },
+          { q: "Дұрыс па: Қасым хан тұсында хандық Еуропаға алғаш танылды.", o: ["Дұрыс", "Бұрыс"], a: 0 },
+          { q: "Қасым хан кімнің баласы?", o: ["Жәнібек ханның", "Керей ханның", "Әбілқайыр ханның", "Есім ханның"], a: 0 },
+          { q: "Қасым ханның билік жылдары?", o: ["1511–1521", "1465–1480", "1598–1628", "1680–1715"], a: 0 }
+        ] },
+      { id: "7-1598", display: "1598", title: "Есім хан билігі", teaser: "«Еңсегей бойлы ер Есім» таққа отырды — Ташкент хандық құрамына енді.",
+        summary: "Есім хан (1598–1628) тұсында «Есім ханның ескі жолы» заңдары қабылданып, Түркістан астанаға айналды.",
+        facts: ["Заңдар жинағы «Есім ханның ескі жолы» деп аталды.", "1598 жылы Ташкент хандық құрамына қосылды.", "Астана — Түркістан қаласы болды.", "Халық оны «Еңсегей бойлы ер Есім» деп атады."],
+        quiz: [
+          { q: "Есім хан тұсындағы заңдар қалай аталды?", o: ["«Ескі жол»", "«Қасқа жол»", "«Жеті Жарғы»", "«Жаңа жол»"], a: 0 },
+          { q: "Есім хан тұсында астана болған қала?", o: ["Түркістан", "Сығанақ", "Ташкент", "Сарайшық"], a: 0 },
+          { q: "1598 жылы хандық құрамына қосылған қала?", o: ["Ташкент", "Бұхара", "Хиуа", "Самарқанд"], a: 0 },
+          { q: "Дұрыс па: халық оны «Еңсегей бойлы ер Есім» атады.", o: ["Дұрыс", "Бұрыс"], a: 0 },
+          { q: "Есім хан қай жылы билікке келді?", o: ["1598 жылы", "1465 жылы", "1511 жылы", "1680 жылы"], a: 0 }
+        ] },
+      { id: "7-1680", display: "1680", title: "Тәуке хан және «Жеті Жарғы»", teaser: "Хандықтың «Алтын ғасыры»: Төле, Қазыбек, Әйтеке билер кеңесі мен ұлы заң.",
+        summary: "Тәуке хан (1680–1715) «Жеті Жарғы» заңдар жинағын қабылдап, билер институтын нығайтты — бұл кезең «Алтын ғасыр» аталады.",
+        facts: ["«Жеті Жарғы» — жеті саладан тұратын заңдар жинағы.", "Төле би, Қазыбек би, Әйтеке би — хан кеңесінің тірегі.", "Билер кеңесі Күлтөбеде өтті: «Күлтөбенің басында күнде кеңес».", "Тәуке хан дәуірі «Алтын ғасыр» деп аталады."],
+        quiz: [
+          { q: "Тәуке хан тұсында қабылданған заңдар жинағы?", o: ["«Жеті Жарғы»", "«Қасқа жол»", "«Ескі жол»", "«Яса»"], a: 0 },
+          { q: "Тәуке ханның үш ұлы биі кімдер?", o: ["Төле, Қазыбек, Әйтеке", "Бұқар, Ақтамберді, Үмбетей", "Қабанбай, Бөгенбай, Наурызбай", "Керей, Жәнібек, Қасым"], a: 0 },
+          { q: "Тәуке хан дәуірі қалай аталады?", o: ["«Алтын ғасыр»", "«Зар заман»", "«Ақтабан шұбырынды»", "«Қараңғы ғасыр»"], a: 0 },
+          { q: "Дұрыс па: «Жеті Жарғы» жеті саладан тұрады.", o: ["Дұрыс", "Бұрыс"], a: 0 },
+          { q: "Билер кеңесі қай жерде өтті?", o: ["Күлтөбеде", "Ордабасында", "Ұлытауда", "Сарайшықта"], a: 0 }
+        ] },
+      { id: "7-1729", display: "1729", title: "Аңырақай шайқасы", teaser: "Үш жүздің біріккен қолы жоңғар басқыншыларын ойсырата жеңді.",
+        summary: "«Ақтабан шұбырынды» қасіретінен кейін біріккен қазақ жасағы Аңырақай шайқасында жоңғарларды талқандап, елдің рухын қайтарды.",
+        facts: ["1723 жылы «Ақтабан шұбырынды, алқакөл сұлама» қасіреті басталған еді.", "1726 жылы Ордабасы құрылтайында Әбілқайыр хан бас қолбасшы сайланды.", "1729 жылы Аңырақай шайқасында жоңғарлар жеңілді.", "Қабанбай, Бөгенбай, Наурызбай батырлар ерекше көзге түсті."],
+        quiz: [
+          { q: "«Ақтабан шұбырынды» қасіреті қай жылы басталды?", o: ["1723 жылы", "1729 жылы", "1718 жылы", "1731 жылы"], a: 0 },
+          { q: "Ордабасында бас қолбасшы болып кім сайланды?", o: ["Әбілқайыр хан", "Абылай хан", "Тәуке хан", "Болат хан"], a: 0 },
+          { q: "Аңырақай шайқасында кім жеңілді?", o: ["Жоңғарлар", "Қытай әскері", "Орыс әскері", "Хиуа хандығы"], a: 0 },
+          { q: "Ордабасы құрылтайы қай жылы өтті?", o: ["1726 жылы", "1710 жылы", "1729 жылы", "1731 жылы"], a: 0 },
+          { q: "Дұрыс па: шайқас Аңырақай тауларының маңында өтті.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "7-1771", display: "1771", title: "Абылай хан — бүкіл қазақтың ханы", teaser: "Түркістанда үш жүздің өкілдері Абылайды ақ киізге көтеріп, хан сайлады.",
+        summary: "1771 жылы Абылай бүкіл қазақтың ханы болып сайланды. Ол Ресей мен Қытай арасында икемді саясат жүргізіп, ел бірлігін сақтады.",
+        facts: ["1771 жылы Түркістанда үш жүздің ханы болып сайланды.", "Шын аты — Әбілмансұр, жас кезіндегі лақабы — «Сабалақ».", "Ресей мен Қытай арасында икемді, тәуелсіз саясат ұстанды.", "Бас кеңесшісі — ұлы жырау Бұқар жырау болды."],
+        quiz: [
+          { q: "Абылай қай қалада бүкіл қазақтың ханы болып сайланды?", o: ["Түркістанда", "Сығанақта", "Ташкентте", "Ордабасында"], a: 0 },
+          { q: "Абылай ханның шын аты кім?", o: ["Әбілмансұр", "Әбілқайыр", "Әбілмәмбет", "Уәли"], a: 0 },
+          { q: "Абылайдың бас кеңесшісі болған жырау?", o: ["Бұқар жырау", "Ақтамберді жырау", "Шалкиіз жырау", "Доспамбет жырау"], a: 0 },
+          { q: "Дұрыс па: Абылай Ресеймен де, Қытаймен де байланыс ұстады.", o: ["Дұрыс", "Бұрыс"], a: 0 },
+          { q: "Абылайдың жас кезіндегі лақап аты?", o: ["«Сабалақ»", "«Көкжал»", "«Жолбарыс»", "«Қаһарман»"], a: 0 }
+        ] }
+    ] },
+  { grade: "8", era: "Отарлау дәуірі", range: "1731 – 1847",
+    intro: "Ресей империясының отарлау саясаты және ұлт-азаттық күрестің басталуы: Әбілқайырдан Кенесарыға дейін.",
+    years: [
+      { id: "8-1731", display: "1731", title: "Кіші жүз бен Ресей", teaser: "Әбілқайыр хан Ресей бодандығын қабылдады — отарлаудың басы.",
+        summary: "1731 жылы Әбілқайыр хан бастаған Кіші жүз Ресей бодандығын қабылдады. Бұл қадам екі жарым ғасырлық отарлық кезеңнің бастауы болды.",
+        facts: ["Бодандықты алғаш Кіші жүз қабылдады.", "Императрица Анна Иоановна грамотаға қол қойды.", "Бұл шешім хан билігінің әлсіреуіне жол ашты."],
+        quiz: [
+          { q: "Ресей бодандығын алғаш қабылдаған жүз?", o: ["Кіші жүз", "Орта жүз", "Ұлы жүз", "Үш жүз бірге"], a: 0 },
+          { q: "Бодандықты қабылдаған хан кім?", o: ["Әбілқайыр хан", "Абылай хан", "Тәуке хан", "Кенесары хан"], a: 0 },
+          { q: "Дұрыс па: бұл оқиға 1731 жылы болды.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "8-1822", display: "1822", title: "«Сібір қазақтарының жарғысы»", teaser: "Сперанский жарғысы Орта жүздегі хандық билікті жойды.",
+        summary: "1822 жылғы жарғы бойынша Орта жүзде хандық билік жойылып, дала округтерге бөлінді — отарлық басқару жүйесі орнады.",
+        facts: ["Жарғыны Сібір генерал-губернаторы М. Сперанский әзірледі.", "Орта жүзде хандық билік ресми жойылды.", "Дала сыртқы округтерге бөлініп, аға сұлтандар тағайындалды."],
+        quiz: [
+          { q: "«Сібір қазақтарының жарғысын» кім әзірледі?", o: ["М. Сперанский", "А. Тевкелев", "В. Перовский", "Г. Колпаковский"], a: 0 },
+          { q: "Жарғы нені жойды?", o: ["Орта жүздегі хандық билікті", "Билер сотын", "Көшпелі шаруашылықты", "Салық жүйесін"], a: 0 },
+          { q: "Дұрыс па: дала округтерге бөлінді.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "8-1837", display: "1837", title: "Кенесары хан көтерілісі", teaser: "Абылайдың немересі он жыл бойы азаттық үшін күресті.",
+        summary: "1837–1847 жылдардағы Кенесары Қасымұлы бастаған көтеріліс — үш жүзді түгел қамтыған ең ірі ұлт-азаттық қозғалыс.",
+        facts: ["Кенесары — Абылай ханның немересі.", "Көтеріліс 1837–1847 жылдары он жылға созылды.", "1841 жылы Кенесары хан болып сайланды — соңғы қазақ ханы.", "Көтеріліс үш жүздің аумағын түгел қамтыды."],
+        quiz: [
+          { q: "Кенесары кімнің немересі?", o: ["Абылай ханның", "Әбілқайыр ханның", "Тәуке ханның", "Есім ханның"], a: 0 },
+          { q: "Көтеріліс қай жылдары болды?", o: ["1837–1847", "1822–1824", "1916–1917", "1783–1797"], a: 0 },
+          { q: "Дұрыс па: Кенесары — соңғы қазақ ханы.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] }
+    ] },
+  { grade: "9", era: "XX ғасыр басы", range: "1916 – 1931",
+    intro: "Ұлт-азаттық көтерілістен Алаш идеясына, одан ұлы қасіретке дейін — халық тағдырының ең ауыр белестері.",
+    years: [
+      { id: "9-1916", display: "1916", title: "Ұлт-азаттық көтеріліс", teaser: "Маусым жарлығына қарсы бүкіл дала көтерілді.",
+        summary: "1916 жылғы 25 маусымдағы патша жарлығы — 19–43 жас аралығындағы ер-азаматтарды тыл жұмысына алу — жаппай көтеріліске ұласты.",
+        facts: ["Себебі — маусым жарлығы: тыл жұмысына адам алу.", "Торғайдағы көтерілісті Амангелді Иманов басқарды.", "Жетісуда Бекболат Әшекеев жетекшілік етті.", "Көтеріліс бүкіл қазақ даласын қамтыды."],
+        quiz: [
+          { q: "1916 жылғы көтерілістің басты себебі?", o: ["Тыл жұмысына алу туралы маусым жарлығы", "Жер салығы", "Әскери міндеттілік заңы", "Дін тыйымы"], a: 0 },
+          { q: "Торғай көтерілісінің батыры кім?", o: ["Амангелді Иманов", "Кенесары Қасымұлы", "Исатай Тайманұлы", "Сырым Датұлы"], a: 0 },
+          { q: "Дұрыс па: жарлық 19–43 жастағыларды тыл жұмысына алуды көздеді.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "9-1917", display: "1917", title: "«Алаш» қозғалысы", teaser: "Қазақ зиялылары ұлттық автономия идеясын көтерді.",
+        summary: "1917 жылы «Алаш» партиясы құрылып, Алашорда үкіметі жарияланды — қазақ мемлекеттілігін жаңғырту әрекеті.",
+        facts: ["«Алаш» партиясының жетекшісі — Әлихан Бөкейханов.", "Алашорда үкіметінің орталығы Семей қаласы болды.", "Қатарында Ахмет Байтұрсынұлы, Міржақып Дулатұлы болды."],
+        quiz: [
+          { q: "«Алаш» партиясының жетекшісі кім?", o: ["Әлихан Бөкейханов", "Ахмет Байтұрсынұлы", "Тұрар Рысқұлов", "Мұстафа Шоқай"], a: 0 },
+          { q: "Алашорда үкіметінің орталығы қай қала?", o: ["Семей", "Орынбор", "Ташкент", "Верный"], a: 0 },
+          { q: "Дұрыс па: «Алаш» ұлттық автономия идеясын көтерді.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "9-1931", display: "1931", title: "Ұлы ашаршылық", teaser: "Күштеп ұжымдастыру саясаты халықтың жартысына жуығын жалмады.",
+        summary: "1931–1933 жылдардағы ашаршылық — Голощекиннің «Кіші Қазан» саясаты мен күштеп ұжымдастырудың қасіретті салдары.",
+        facts: ["Себебі — күштеп ұжымдастыру және мал-мүлікті тәркілеу.", "Голощекиннің саясаты «Кіші Қазан» деп аталды.", "Халықтың 40%-ға жуығы қырылды, миллиондар шетелге ауды.", "31 мамыр — саяси қуғын-сүргін және ашаршылық құрбандарын еске алу күні."],
+        quiz: [
+          { q: "Ашаршылықтың басты себебі не?", o: ["Күштеп ұжымдастыру", "Құрғақшылық қана", "Соғыс", "Көші-қон"], a: 0 },
+          { q: "Голощекин саясаты қалай аталды?", o: ["«Кіші Қазан»", "«Үлкен секіріс»", "«Жаңа бағыт»", "«Тың игеру»"], a: 0 },
+          { q: "Дұрыс па: 31 мамыр — құрбандарды еске алу күні.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] }
+    ] },
+  { grade: "10", era: "Кеңес дәуірі", range: "1954 – 1986",
+    intro: "Тың игеруден Желтоқсан көтерілісіне дейін: Кеңес дәуіріндегі Қазақстанның қайшылықты жолы.",
+    years: [
+      { id: "10-1954", display: "1954", title: "Тың игеру науқаны", teaser: "Миллиондаған гектар дала жыртылып, өлкенің демографиясы өзгерді.",
+        summary: "1954 жылы басталған тың игеру Қазақстанды астық өлкесіне айналдырды, бірақ экологиялық және демографиялық зардаптар әкелді.",
+        facts: ["25 миллион гектардан астам жер жыртылды.", "Одақтың түкпір-түкпірінен миллиондаған адам көшіп келді.", "Қазақтар өз жерінде азшылыққа айналды.", "Топырақ эрозиясы — ірі экологиялық зардап."],
+        quiz: [
+          { q: "Тың игеру қай жылы басталды?", o: ["1954 жылы", "1946 жылы", "1961 жылы", "1965 жылы"], a: 0 },
+          { q: "Қанша жер жыртылды?", o: ["25 млн га-дан астам", "1 млн га", "5 млн га", "100 мың га"], a: 0 },
+          { q: "Дұрыс па: тың игеру демографиялық ахуалды өзгертті.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "10-1961", display: "1961", title: "Байқоңыр: адам ғарышта", teaser: "Юрий Гагарин қазақ даласынан ғарышқа ұшты.",
+        summary: "1961 жылы 12 сәуірде Байқоңыр ғарыш айлағынан адамзат тарихындағы алғашқы ғарышкер ұшырылды.",
+        facts: ["12 сәуір 1961 жыл — Юрий Гагариннің ұшуы.", "Байқоңыр — әлемдегі тұңғыш әрі ең ірі ғарыш айлағы.", "Кейін Тоқтар Әубәкіров пен Талғат Мұсабаев ғарышқа ұшты."],
+        quiz: [
+          { q: "Гагарин қай ғарыш айлағынан ұшты?", o: ["Байқоңырдан", "Плесецктен", "Восточныйдан", "Канаверал мүйісінен"], a: 0 },
+          { q: "Тұңғыш қазақ ғарышкері кім?", o: ["Тоқтар Әубәкіров", "Талғат Мұсабаев", "Айдын Айымбетов", "Юрий Гагарин"], a: 0 },
+          { q: "Дұрыс па: ұшу 1961 жылғы 12 сәуірде болды.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "10-1986", display: "1986", title: "Желтоқсан көтерілісі", teaser: "Алматы жастары ұлттық намыс үшін алаңға шықты.",
+        summary: "1986 жылы 16–17 желтоқсанда Алматыда жастар Мәскеудің озбыр шешіміне қарсы бейбіт шеруге шықты — тәуелсіздіктің алғашқы қарлығашы.",
+        facts: ["Себебі — Г. Колбиннің республика басшысы болып тағайындалуы.", "Шеру 16–17 желтоқсанда Алматыда өтті.", "Қайрат Рысқұлбеков — көтерілістің символына айналған жас.", "Желтоқсан тәуелсіздік жолындағы бетбұрыс болды."],
+        quiz: [
+          { q: "Желтоқсан көтерілісінің себебі не?", o: ["Колбиннің тағайындалуы", "Азық-түлік тапшылығы", "Жер реформасы", "Тіл заңы"], a: 0 },
+          { q: "Көтеріліс қай қалада өтті?", o: ["Алматыда", "Астанада", "Қарағандыда", "Шымкентте"], a: 0 },
+          { q: "Дұрыс па: Қайрат Рысқұлбеков — Желтоқсан символы.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] }
+    ] },
+  { grade: "11", era: "Тәуелсіздік", range: "1991 – 1997",
+    intro: "Тәуелсіз Қазақстанның қалыптасуы: егемендіктен жаңа елордаға дейінгі тарихи қадамдар.",
+    years: [
+      { id: "11-1991", display: "1991", title: "Тәуелсіздік жариялануы", teaser: "16 желтоқсанда Қазақстан тәуелсіз мемлекет атанды.",
+        summary: "1991 жылы 16 желтоқсанда «Қазақстан Республикасының мемлекеттік тәуелсіздігі туралы» заң қабылданды — жаңа дәуір басталды.",
+        facts: ["16 желтоқсан — Тәуелсіздік күні.", "1 желтоқсанда тұңғыш президент сайлауы өтті.", "Қазақстан — тәуелсіздігін жариялаған соңғы одақтас республика.", "1992 жылы 2 наурызда БҰҰ-ға мүше болды."],
+        quiz: [
+          { q: "Тәуелсіздік қай күні жарияланды?", o: ["16 желтоқсан 1991 ж.", "25 қазан 1990 ж.", "1 желтоқсан 1991 ж.", "2 наурыз 1992 ж."], a: 0 },
+          { q: "1992 жылы Қазақстан қай ұйымға мүше болды?", o: ["БҰҰ-ға", "НАТО-ға", "Еуроодаққа", "АСЕАН-ға"], a: 0 },
+          { q: "Дұрыс па: тұңғыш президент сайлауы 1991 жылғы 1 желтоқсанда өтті.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "11-1993", display: "1993", title: "Ұлттық валюта — теңге", teaser: "15 қарашада ел өз ақшасына көшті.",
+        summary: "1993 жылы 15 қарашада теңге айналымға енгізілді — экономикалық егемендіктің басты нышаны.",
+        facts: ["Теңге 1993 жылы 15 қарашада енгізілді.", "15 қараша — Ұлттық валюта күні.", "Алғашқы дизайнын қазақстандық суретшілер тобы жасады."],
+        quiz: [
+          { q: "Теңге қай күні енгізілді?", o: ["15 қараша 1993 ж.", "16 желтоқсан 1991 ж.", "30 тамыз 1995 ж.", "1 қаңтар 1994 ж."], a: 0 },
+          { q: "15 қараша қалай аталады?", o: ["Ұлттық валюта күні", "Конституция күні", "Тәуелсіздік күні", "Республика күні"], a: 0 },
+          { q: "Дұрыс па: теңге — экономикалық егемендік нышаны.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] },
+      { id: "11-1997", display: "1997", title: "Жаңа елорда — Астана", teaser: "Елорда Алматыдан Сарыарқа төріне көшірілді.",
+        summary: "1997 жылы елорда Ақмолаға көшірілді. 1998 жылы қала Астана атанып, еліміздің жаңа символына айналды.",
+        facts: ["1997 жылы елорда Ақмолаға көшірілді.", "1998 жылы қала Астана деп аталды.", "Астана — Еуразия жүрегіндегі ең жас елордалардың бірі."],
+        quiz: [
+          { q: "Елорда қай жылы көшірілді?", o: ["1997 жылы", "1991 жылы", "1993 жылы", "2000 жылы"], a: 0 },
+          { q: "Елорда қай қаладан көшірілді?", o: ["Алматыдан", "Шымкенттен", "Қарағандыдан", "Орынбордан"], a: 0 },
+          { q: "Дұрыс па: 1998 жылы қала Астана атанды.", o: ["Дұрыс", "Бұрыс"], a: 0 }
+        ] }
+    ] }
+];
+
+const LS_KEY = "tarihtalk-progress-v1";
+
+class Component extends DCLogic {
+  state = { grade: null, query: "", modal: null, step: "learn", qi: 0, picked: null, score: 0, done: {} };
+
+  componentDidMount() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
+      if (saved && typeof saved === "object") this.setState({ done: saved });
+    } catch (e) {}
+    this.onKey = (e) => { if (e.key === "Escape") this.setState({ modal: null }); };
+    window.addEventListener("keydown", this.onKey);
+    this.onScroll = () => {
+      const y = window.scrollY;
+      if (this.orn1) this.orn1.style.transform = "translateY(" + (y * 0.08) + "px)";
+      if (this.orn2) this.orn2.style.transform = "translateY(" + (y * 0.16) + "px)";
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.onKey);
+    window.removeEventListener("scroll", this.onScroll);
+  }
+
+  saveDone(done) {
+    this.setState({ done });
+    try { localStorage.setItem(LS_KEY, JSON.stringify(done)); } catch (e) {}
+  }
+
+  currentGrade() { return this.state.grade ?? String(this.props.startGrade ?? "7"); }
+
+  findYear(id) {
+    for (const g of DATA) { const y = g.years.find(y => y.id === id); if (y) return { g, y }; }
+    return null;
+  }
+
+  openYear(id) {
+    const hit = this.findYear(id);
+    if (!hit) return;
+    this.setState({ modal: id, grade: hit.g.grade, step: "learn", qi: 0, picked: null, score: 0, query: "" });
+  }
+
+  markDone(id) {
+    if (!this.state.done[id]) this.saveDone({ ...this.state.done, [id]: true });
+  }
+
+  renderVals() {
+    const gradeId = this.currentGrade();
+    const gradeData = DATA.find(g => g.grade === gradeId) || DATA[2];
+    const done = this.state.done;
+    const q = this.state.query.trim().toLowerCase();
+
+    const grades = DATA.map(g => {
+      const active = g.grade === gradeId;
+      return {
+        label: g.grade,
+        open: () => this.setState({ grade: g.grade, query: "" }),
+        bg: active ? "linear-gradient(90deg,#B4543E,#E8C56A)" : "rgba(21,30,58,0.7)",
+        fg: active ? "#0A0F23" : "#B9C0D8",
+        bd: active ? "transparent" : "rgba(232,197,106,0.25)"
+      };
+    });
+
+    const years = gradeData.years.map(y => ({
+      display: y.display, title: y.title, teaser: y.teaser,
+      done: !!done[y.id],
+      nodeBg: done[y.id] ? "#E8C56A" : "#0A0F23",
+      open: () => this.openYear(y.id)
+    }));
+
+    // search
+    let results = [];
+    if (q) {
+      for (const g of DATA) for (const y of g.years) {
+        const hay = (y.display + " " + y.title + " " + y.teaser + " " + y.summary).toLowerCase();
+        if (hay.includes(q)) results.push({
+          display: y.display, title: y.title, gradeLabel: g.grade, era: g.era,
+          open: () => this.openYear(y.id)
+        });
+      }
+    }
+
+    // totals
+    const yearTotal = DATA.reduce((n, g) => n + g.years.length, 0);
+    const doneTotal = Object.keys(done).filter(k => done[k]).length;
+    const gradeDone = gradeData.years.filter(y => done[y.id]).length;
+
+    // modal
+    const hit = this.state.modal ? this.findYear(this.state.modal) : null;
+    let sel = null, selFacts = [], quiz = [], options = [], questionText = "";
+    let hasNextYear = false, nextYearDisplay = "";
+    if (hit) {
+      sel = { display: hit.y.display, title: hit.y.title, era: hit.g.era, gradeLabel: hit.g.grade, summary: hit.y.summary };
+      selFacts = hit.y.facts.map(t => ({ text: t }));
+      quiz = hit.y.quiz;
+      const cur = quiz[this.state.qi];
+      if (cur) {
+        questionText = cur.q;
+        const letters = ["А", "Ә", "Б", "В"];
+        options = cur.o.map((text, i) => {
+          const picked = this.state.picked;
+          let bg = "rgba(21,30,58,0.7)", fg = "#DDE2F0", bd = "rgba(232,197,106,0.22)";
+          if (picked !== null) {
+            if (i === cur.a) { bg = "rgba(90,140,90,0.25)"; bd = "#7FBF8A"; fg = "#CFEBD4"; }
+            else if (i === picked) { bg = "rgba(180,84,62,0.25)"; bd = "#C96B54"; fg = "#F0CFC6"; }
+          }
+          return {
+            text, letter: letters[i] || "•", bg, fg, bd,
+            pick: () => {
+              if (this.state.picked !== null) return;
+              this.setState({ picked: i, score: this.state.score + (i === cur.a ? 1 : 0) });
+            }
+          };
+        });
+      }
+      const idx = hit.g.years.findIndex(y => y.id === hit.y.id);
+      if (idx >= 0 && idx < hit.g.years.length - 1) {
+        hasNextYear = true;
+        nextYearDisplay = hit.g.years[idx + 1].display;
+      }
+    }
+
+    const isLast = hit ? this.state.qi >= quiz.length - 1 : false;
+    const pct = Math.round((this.state.qi + (this.state.picked !== null ? 1 : 0)) / Math.max(quiz.length, 1) * 100);
+    const scorePct = quiz.length ? this.state.score / quiz.length : 0;
+
+    let resultTitle = "Жарайсың!", resultMsg = "Тағы да қайталап көрсең, нәтижең жақсара түседі.";
+    if (scorePct === 1) { resultTitle = "Керемет! Жыл толық бағындырылды"; resultMsg = "Барлық сұраққа қатесіз жауап бердің. Тарих сенімен сөйлесіп тұр!"; }
+    else if (scorePct >= 0.6) { resultTitle = "Жақсы нәтиже!"; resultMsg = "Негізгі оқиғаларды жақсы білесің. Қателескен сұрақтарды қайта қарап шық."; }
+    else { resultTitle = "Тағы бір мәрте тыңдап көр"; resultMsg = "Жылдың әңгімесін қайта оқып, тесті қайталап көрсең — бәрі шығады."; }
+
+    return {
+      // refs
+      ornRef1: el => { this.orn1 = el; },
+      ornRef2: el => { this.orn2 = el; },
+      stop: e => e.stopPropagation(),
+      // props
+      embersOn: this.props.embers ?? true,
+      showProgressOn: this.props.showProgress ?? true,
+      // header
+      query: this.state.query,
+      onQuery: e => this.setState({ query: e.target.value }),
+      doneTotal, yearTotal,
+      progressPct: Math.round(doneTotal / yearTotal * 100) + "%",
+      // tabs + hero
+      grades,
+      eraTitle: gradeData.era,
+      eraRange: gradeData.range,
+      eraIntro: gradeData.intro,
+      gradeDone, gradeCount: gradeData.years.length,
+      // search
+      searching: q.length > 0,
+      notSearching: q.length === 0,
+      results, resultCount: results.length,
+      noResults: q.length > 0 && results.length === 0,
+      // timeline
+      years,
+      // modal
+      modalOpen: !!hit,
+      closeModal: () => this.setState({ modal: null }),
+      sel: sel || {}, selFacts,
+      stepLearn: this.state.step === "learn",
+      stepQuiz: this.state.step === "quiz",
+      stepDone: this.state.step === "done",
+      toQuiz: () => this.setState({ step: "quiz", qi: 0, picked: null, score: 0 }),
+      // quiz
+      qNum: this.state.qi + 1, qTotal: quiz.length,
+      quizPct: pct + "%",
+      questionText, options,
+      answered: this.state.picked !== null,
+      feedbackText: this.state.picked !== null ? (hit && this.state.picked === quiz[this.state.qi].a ? "✓ Дұрыс жауап!" : "✕ Қате. Дұрысы жасыл түспен көрсетілді.") : "",
+      feedbackColor: this.state.picked !== null && hit && this.state.picked === quiz[this.state.qi].a ? "#7FBF8A" : "#C96B54",
+      nextLabel: isLast ? "Нәтижені көру →" : "Келесі сұрақ →",
+      nextQuestion: () => {
+        if (isLast) { this.markDone(this.state.modal); this.setState({ step: "done" }); }
+        else this.setState({ qi: this.state.qi + 1, picked: null });
+      },
+      // result
+      score: this.state.score,
+      resultTitle, resultMsg,
+      retryQuiz: () => this.setState({ step: "quiz", qi: 0, picked: null, score: 0 }),
+      hasNextYear, noNextYear: !hasNextYear, nextYearDisplay,
+      openNextYear: () => {
+        if (!hit) return;
+        const idx = hit.g.years.findIndex(y => y.id === hit.y.id);
+        const next = hit.g.years[idx + 1];
+        if (next) this.openYear(next.id);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

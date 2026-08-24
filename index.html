@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:wght@500;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body { margin:0; padding:0; background:#0A0F23; }
+    a { color:#E8C56A; } a:hover { color:#F6D98C; }
+    ::selection { background:rgba(232,197,106,0.3); }
+    @keyframes emberFloat { 0%{ transform:translateY(0); opacity:0; } 12%{ opacity:0.8; } 88%{ opacity:0.5; } 100%{ transform:translateY(-92vh); opacity:0; } }
+    @keyframes fadeUp { from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:translateY(0); } }
+    @keyframes storyIn { from{ opacity:0; } to{ opacity:1; } }
+    @keyframes glowPulse { 0%,100%{ opacity:0.55; } 50%{ opacity:1; } }
+    @keyframes dashMove { to { stroke-dashoffset:-48; } }
+    @keyframes caretBlink { 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
+    @keyframes popIn { from{ opacity:0; transform:scale(0.85); } to{ opacity:1; transform:scale(1); } }
+    @keyframes sparkle { 0%{ transform:scale(0) rotate(0deg); opacity:0; } 40%{ opacity:1; } 100%{ transform:scale(1.4) rotate(180deg); opacity:0; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; font-family:'PT Sans',sans-serif; color:{{T.text}}; position:relative; overflow-x:clip; transition:color 0.3s;">
+
+  <!-- ===== Background ===== -->
+  <div style="position:fixed; inset:0; z-index:0; background:{{T.pageBg}}; transition:background 0.4s;"></div>
+  <div ref="{{ornRef1}}" style="position:fixed; inset:-20% 0; z-index:0; opacity:{{T.ornOpacity}}; background-image:url('data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22 viewBox=%220 0 180 180%22%3E%3Cg fill=%22none%22 stroke=%22{{T.ornStroke}}%22 stroke-width=%222.5%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M90 30 C60 30 48 58 62 76 C72 89 92 84 92 68 C92 58 82 55 77 62%22/%3E%3Cpath d=%22M90 150 C120 150 132 122 118 104 C108 91 88 96 88 112 C88 122 98 125 103 118%22/%3E%3Crect x=%2284%22 y=%2284%22 width=%2212%22 height=%2212%22 transform=%22rotate(45 90 90)%22/%3E%3C/g%3E%3C/svg%3E'); background-size:180px 180px;"></div>
+
+  <sc-if value="{{embersOn}}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed; inset:0; z-index:0; pointer-events:none;">
+      <span style="position:absolute; left:12%; bottom:-10px; width:4px; height:4px; border-radius:50%; background:#F0C96A; box-shadow:0 0 8px 2px rgba(240,201,106,0.6); animation:emberFloat 16s linear infinite;"></span>
+      <span style="position:absolute; left:38%; bottom:-10px; width:3px; height:3px; border-radius:50%; background:#E8C56A; box-shadow:0 0 6px 2px rgba(240,201,106,0.5); animation:emberFloat 21s linear 3s infinite;"></span>
+      <span style="position:absolute; left:62%; bottom:-10px; width:5px; height:5px; border-radius:50%; background:#F6D98C; box-shadow:0 0 10px 3px rgba(240,201,106,0.55); animation:emberFloat 18s linear 7s infinite;"></span>
+      <span style="position:absolute; left:85%; bottom:-10px; width:3px; height:3px; border-radius:50%; background:#E8C56A; box-shadow:0 0 6px 2px rgba(240,201,106,0.5); animation:emberFloat 24s linear 2s infinite;"></span>
+    </div>
+  </sc-if>
+
+  <!-- ===== Header ===== -->
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:20; backdrop-filter:blur(14px); background:{{T.headerBg}}; border-bottom:1px solid {{T.headerBorder}}; transition:background 0.3s, border-color 0.3s;">
+    <div style="max-width:1180px; margin:0 auto; padding:12px 24px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <svg width="40" height="40" viewBox="0 0 42 42" style="flex-shrink:0;">
+          <circle cx="21" cy="21" r="18" fill="none" stroke="{{T.gold}}" stroke-width="2"></circle>
+          <circle cx="21" cy="21" r="11" fill="none" stroke="{{T.gold}}" stroke-width="1.2" opacity="0.7"></circle>
+          <path d="M21 3 L21 39 M3 21 L39 21 M8.3 8.3 L33.7 33.7 M33.7 8.3 L8.3 33.7" stroke="{{T.gold}}" stroke-width="1.2" opacity="0.7"></path>
+        </svg>
+        <div>
+          <div style="font-family:'Playfair Display',serif; font-size:23px; font-weight:700; color:{{T.headline}}; letter-spacing:0.5px;">Tarih<span style="color:{{T.gold}};">Talk</span></div>
+          <div style="font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:{{T.textMuted}};">Жылдар сөйлейді</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; background:{{T.chipBg}}; border:1px solid {{T.chipBorder}}; border-radius:999px; padding:6px 14px;">
+        <span style="display:inline-block; width:7px; height:7px; transform:rotate(45deg); background:{{T.gold}};"></span>
+        <span style="font-size:13px; color:{{T.textSecondary}};">Дәреже:</span>
+        <span style="font-size:13.5px; font-weight:700; color:{{T.goldInk}};">{{rankName}}</span>
+      </div>
+      <div style="flex:1;"></div>
+      <input value="{{query}}" onChange="{{onQuery}}" placeholder="Жыл немесе оқиға іздеу…" style="background:{{T.inputBg}}; border:1px solid {{T.inputBorder}}; border-radius:999px; padding:9px 16px; color:{{T.text}}; font-family:'PT Sans',sans-serif; font-size:14px; width:min(220px, 55vw); outline:none;">
+      <button onClick="{{toggleSound}}" title="Дыбыс" style="cursor:pointer; height:38px; padding:0 14px; border-radius:999px; background:{{T.inputBg}}; border:1px solid {{T.chipBorder}}; color:{{T.goldInk}}; font-size:14px; font-family:'PT Sans',sans-serif; font-weight:700;" style-hover="background:{{T.chipBg}};">{{soundLabel}}</button>
+      <button onClick="{{toggleTheme}}" title="Тема" style="cursor:pointer; height:38px; width:38px; border-radius:50%; background:{{T.inputBg}}; border:1px solid {{T.chipBorder}}; color:{{T.goldInk}}; font-size:16px;" style-hover="background:{{T.chipBg}};">{{themeIcon}}</button>
+      <div style="display:flex; flex-direction:column; gap:5px; min-width:110px;">
+        <div style="font-size:12px; color:{{T.textMuted}};"><span style="color:{{T.goldInk}}; font-weight:700;">{{doneTotal}}</span> / {{yearTotal}} жыл</div>
+        <div style="height:4px; border-radius:2px; background:{{T.trackBg}}; overflow:hidden;"><div style="height:100%; border-radius:2px; background:linear-gradient(90deg,#B4543E,#E8C56A); width:{{progressPct}};"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Section tabs ===== -->
+  <nav data-screen-label="Section tabs" style="position:relative; z-index:10; max-width:1180px; margin:22px auto 0; padding:0 24px; display:flex; gap:8px; flex-wrap:wrap;">
+    <sc-for list="{{sections}}" as="s" hint-placeholder-count="3">
+      <button onClick="{{s.open}}" style="cursor:pointer; display:flex; align-items:center; gap:8px; font-family:'Playfair Display',serif; font-size:15px; font-weight:600; padding:9px 18px; border-radius:10px; transition:all 0.25s ease; background:{{s.bg}}; color:{{s.fg}}; border:1px solid {{s.bd}};" style-hover="border-color:#E8C56A;"><span>{{s.icon}}</span>{{s.label}}</button>
+    </sc-for>
+  </nav>
+
+  <!-- ===== Grade tabs ===== -->
+  <nav data-screen-label="Grade tabs" style="position:relative; z-index:10; max-width:1180px; margin:14px auto 0; padding:0 24px; display:flex; gap:10px; flex-wrap:wrap;">
+    <sc-for list="{{grades}}" as="g" hint-placeholder-count="7">
+      <button onClick="{{g.open}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:10px 20px; border-radius:999px; transition:all 0.25s ease; background:{{g.bg}}; color:{{g.fg}}; border:1px solid {{g.bd}};" style-hover="border-color:#E8C56A;">{{g.label}}-сынып</button>
+    </sc-for>
+  </nav>
+
+  <!-- ===== Era hero ===== -->
+  <sc-if value="{{sectionYears}}" hint-placeholder-val="{{ true }}">
+  <section data-screen-label="Era hero" style="position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:40px 24px 6px;">
+    <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+      <h1 style="margin:0; font-family:'Playfair Display',serif; font-size:clamp(30px,4.5vw,46px); font-weight:700; color:{{T.headline}};">{{eraTitle}}</h1>
+      <div style="font-family:'Cinzel',serif; font-size:clamp(17px,2vw,22px); color:{{T.goldInk}}; letter-spacing:2px;">{{eraRange}}</div>
+    </div>
+    <p style="margin:12px 0 0; max-width:640px; font-size:16.5px; line-height:1.65; color:{{T.textSecondary}};">{{eraIntro}}</p>
+    <div style="margin-top:16px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:13.5px; color:{{T.textMuted}};">
+      <span style="display:flex; align-items:center; gap:8px;"><span style="display:inline-block; width:8px; height:8px; transform:rotate(45deg); background:{{T.gold}};"></span>Өтілді: <span style="color:{{T.goldInk}}; font-weight:700;">{{gradeDone}}</span>&nbsp;/ {{gradeCount}} белес</span>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ===== Search results ===== -->
+  <sc-if value="{{searchingAndYears}}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Search results" style="position:relative; z-index:5; max-width:1180px; margin:0 auto; padding:20px 24px 80px;">
+      <div style="font-size:14px; color:{{T.textMuted}}; margin-bottom:18px;">Іздеу нәтижелері: <span style="color:{{T.goldInk}}; font-weight:700;">{{resultCount}}</span></div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{results}}" as="r" hint-placeholder-count="2">
+          <div onClick="{{r.open}}" style="cursor:pointer; display:flex; align-items:center; gap:18px; padding:16px 20px; border-radius:14px; background:{{T.cardBg}}; border:1px solid {{T.cardBorder}}; transition:all 0.2s ease;" style-hover="border-color:#E8C56A;">
+            <div style="font-family:'Cinzel',serif; font-size:26px; font-weight:600; color:{{T.goldInk}}; min-width:96px;">{{r.display}}</div>
+            <div style="flex:1;">
+              <div style="font-family:'Playfair Display',serif; font-size:17px; color:{{T.headline}};">{{r.title}}</div>
+              <div style="font-size:13px; color:{{T.textMuted}}; margin-top:2px;">{{r.gradeLabel}}-сынып · {{r.era}}</div>
+            </div>
+            <div style="color:{{T.gold}}; font-size:18px;">→</div>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{noResults}}" hint-placeholder-val="{{ false }}">
+        <div style="padding:40px 0; text-align:center; color:{{T.textMuted}}; font-size:15px;">Ештеңе табылмады.</div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <!-- ===== Zigzag quest path ===== -->
+  <sc-if value="{{notSearchingAndYears}}" hint-placeholder-val="{{ true }}">
+    <main data-screen-label="Quest path" style="position:relative; z-index:5; max-width:1080px; margin:0 auto; padding:36px 24px 110px;">
+      <div style="display:flex; flex-direction:column;">
+        <sc-for list="{{years}}" as="y" hint-placeholder-count="3">
+          <div style="animation:fadeUp 0.6s ease both;">
+            <!-- year stop -->
+            <div style="display:flex; justify-content:{{y.justify}};">
+              <div onClick="{{y.open}}" style="cursor:pointer; position:relative; max-width:min(560px, 92vw); transform:rotate({{y.tilt}}); transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);" style-hover="transform:rotate(0deg) scale(1.03);">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:2px;">
+                  <span style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:{{T.textMuted}}; border:1px solid {{T.chipBorder}}; border-radius:999px; padding:3px 12px;">{{y.step}}-белес</span>
+                  <sc-if value="{{y.done}}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:12px; font-weight:700; color:{{T.onGold}}; background:#E8C56A; border-radius:999px; padding:3px 12px;">✓ Бағындырылды</span>
+                  </sc-if>
+                </div>
+                <div style="font-family:'Cinzel',serif; font-weight:700; font-size:clamp(54px, 8.5vw, 108px); line-height:1.05; color:{{T.numeral}}; text-shadow:{{T.numeralShadow}}; letter-spacing:2px; user-select:none; transition:text-shadow 0.35s, color 0.35s;" style-hover="color:#F6D98C; text-shadow:0 0 28px rgba(240,201,106,0.85), 0 0 72px rgba(240,201,106,0.35);">{{y.display}}</div>
+                <div style="background:{{T.cardBg}}; backdrop-filter:blur(8px); border:1px solid {{T.cardBorder}}; border-radius:14px; padding:14px 18px; margin-top:6px; transition:border-color 0.25s;" style-hover="border-color:#E8C56A;">
+                  <div style="font-family:'Playfair Display',serif; font-size:18px; font-weight:600; color:{{T.headline}};">{{y.title}}</div>
+                  <p style="margin:6px 0 10px; font-size:14px; line-height:1.55; color:{{T.textSecondary}};">{{y.teaser}}</p>
+                  <div style="display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:{{T.goldInk}};">
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; border:1px solid rgba(232,197,106,0.5); font-size:9px;">▶</span>
+                    Жылды тыңдау
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- connector -->
+            <sc-if value="{{y.hasNext}}" hint-placeholder-val="{{ true }}">
+              <svg viewBox="0 0 100 30" preserveAspectRatio="none" style="display:block; width:min(720px, 86%); margin:6px auto; height:96px; overflow:visible;">
+                <path d="{{y.connPath}}" fill="none" stroke="#E8C56A" stroke-width="1.6" stroke-dasharray="4 4" opacity="0.45" style="animation:dashMove 3.5s linear infinite;" vector-effect="non-scaling-stroke"></path>
+              </svg>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ===== Figures / Places empty-state sections ===== -->
+  <sc-if value="{{sectionFigures}}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Figures section" style="position:relative; z-index:5; max-width:1080px; margin:0 auto; padding:20px 24px 110px;">
+      <h2 style="margin:0 0 22px; font-family:'Playfair Display',serif; font-size:clamp(24px,3.5vw,32px); color:{{T.headline}};">Тұлғалар — {{gradeLabelCur}}-сынып</h2>
+      <sc-if value="{{hasFigures}}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:18px;">
+          <sc-for list="{{figures}}" as="f" hint-placeholder-count="2">
+            <div onClick="{{f.open}}" style="cursor:pointer; background:{{T.cardBg}}; border:1px solid {{T.cardBorder}}; border-radius:16px; overflow:hidden; transition:all 0.25s ease;" style-hover="border-color:#E8C56A; transform:translateY(-3px);">
+              <div style="width:100%; aspect-ratio:4/5; overflow:hidden; background:#000;">
+                <img ref="{{f.imgRef}}" alt="{{f.name}}" style="width:100%; height:100%; object-fit:cover; display:block;"/>
+              </div>
+              <div style="padding:16px 18px;">
+                <div style="font-family:'Playfair Display',serif; font-size:19px; font-weight:600; color:{{T.headline}};">{{f.name}}</div>
+                <div style="font-family:'Cinzel',serif; font-size:12.5px; color:{{T.goldInk}}; margin-top:4px; letter-spacing:1px;">{{f.years}}</div>
+                <p style="margin:8px 0 0; font-size:13.5px; line-height:1.55; color:{{T.textSecondary}};">{{f.teaser}}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{noFigures}}" hint-placeholder-val="{{ true }}">
+        <div style="text-align:center; padding:40px 0;">
+          <div style="font-family:'Cinzel',serif; font-size:44px; color:{{T.gold}}; margin-bottom:14px;">✦</div>
+          <p style="max-width:520px; margin:0 auto; font-size:15.5px; line-height:1.7; color:{{T.textSecondary}};">Бұл сыныпқа тұлғалар мазмұны дайындалуда.</p>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+  <sc-if value="{{sectionPlaces}}" hint-placeholder-val="{{ false }}">
+    <section data-screen-label="Places section" style="position:relative; z-index:5; max-width:900px; margin:0 auto; padding:60px 24px 110px; text-align:center;">
+      <div style="font-family:'Cinzel',serif; font-size:44px; color:{{T.gold}}; margin-bottom:14px;">◈</div>
+      <h2 style="margin:0 0 10px; font-family:'Playfair Display',serif; font-size:clamp(24px,3.5vw,32px); color:{{T.headline}};">Жер-су аттары — {{gradeLabelCur}}-сынып</h2>
+      <p style="max-width:520px; margin:0 auto; font-size:15.5px; line-height:1.7; color:{{T.textSecondary}};">Бұл бөлімде қалалар, өзендер мен қоныстардың тарихы және атауларының шығу тегі қосылады. Мазмұн дайындалуда.</p>
+    </section>
+  </sc-if>
+
+  <footer style="position:relative; z-index:5; border-top:1px solid {{T.headerBorder}}; padding:26px 24px; text-align:center; font-size:13px; color:{{T.textMuted}};">
+    TarihTalk · Қазақстан тарихы, 5–11 сынып · «Жылдар сөйлейді»
+  </footer>
+
+  <!-- ===== FIGURE OVERLAY ===== -->
+  <sc-if value="{{figureOpen}}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{closeFigure}}" style="position:fixed; inset:0; z-index:55; background:rgba(5,8,20,0.82); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:20px;">
+      <div onClick="{{stop}}" style="width:min(680px, 96vw); max-height:88vh; overflow-y:auto; background:{{T.overlaySolid}}; border:1px solid {{T.cardBorder}}; border-radius:20px; position:relative; animation:modalIn 0.35s cubic-bezier(0.22,1,0.36,1) both; box-shadow:0 30px 90px rgba(0,0,0,0.5);">
+        <button onClick="{{closeFigure}}" style="position:absolute; top:14px; right:14px; z-index:2; cursor:pointer; width:36px; height:36px; border-radius:50%; background:rgba(20,20,20,0.35); border:1px solid rgba(232,197,106,0.5); color:#F2E7C9; font-size:17px; line-height:1;">✕</button>
+        <div style="width:100%; max-height:52vh; overflow:hidden; border-radius:20px 20px 0 0; background:#000; display:flex; align-items:center; justify-content:center;">
+          <img ref="{{figImgRef}}" alt="{{fig.name}}" style="width:100%; max-height:52vh; object-fit:contain; display:block;"/>
+        </div>
+        <div style="padding:clamp(20px,4vw,32px);">
+          <div style="font-family:'Playfair Display',serif; font-size:clamp(22px,3.2vw,28px); font-weight:600; color:{{T.headline}};">{{fig.name}}</div>
+          <div style="font-family:'Cinzel',serif; font-size:14px; color:{{T.goldInk}}; margin-top:6px; letter-spacing:1px;">{{fig.years}} · {{fig.role}}</div>
+          <div style="height:1px; background:linear-gradient(90deg, rgba(232,197,106,0.5), transparent); margin:18px 0 20px;"></div>
+          <p style="margin:0 0 16px; font-size:15px; line-height:1.7; color:{{T.textSecondary}};">{{fig.summary}}</p>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{figFacts}}" as="ff" hint-placeholder-count="3">
+              <div style="display:flex; gap:12px; align-items:flex-start; background:{{T.trackBg}}; border-radius:10px; padding:12px 16px; font-size:14px; line-height:1.6; color:{{T.text}};">
+                <span style="color:{{T.gold}}; font-weight:700; flex-shrink:0;">❖</span>
+                <span>{{ff.text}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== STORY OVERLAY ===== -->
+  <sc-if value="{{storyOpen}}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Story overlay" style="position:fixed; inset:0; z-index:60; background:{{T.overlayBg}}; color:{{T.text}}; display:flex; flex-direction:column; animation:storyIn 0.4s ease both;">
+
+      <!-- ghost numeral -->
+      <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; overflow:hidden;">
+        <div style="font-family:'Cinzel',serif; font-weight:700; font-size:clamp(120px, 26vw, 420px); color:{{T.ghostNumeral}}; user-select:none; white-space:nowrap;">{{sel.display}}</div>
+      </div>
+
+      <!-- top bar -->
+      <div style="position:relative; z-index:3; padding:14px 18px 0;">
+        <div style="display:flex; gap:5px;">
+          <sc-for list="{{beatBars}}" as="b" hint-placeholder-count="5">
+            <div style="flex:1; height:3px; border-radius:2px; background:{{b.bg}}; transition:background 0.3s;"></div>
+          </sc-for>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px; margin-top:12px;">
+          <div style="font-family:'Cinzel',serif; font-size:22px; font-weight:700; color:{{T.goldInk}};">{{sel.display}}</div>
+          <div style="font-size:13.5px; color:{{T.textSecondary}};">{{sel.title}} · {{sel.gradeLabel}}-сынып</div>
+          <div style="flex:1;"></div>
+          <button onClick="{{toggleTheme}}" style="cursor:pointer; height:34px; width:34px; border-radius:50%; background:{{T.chipBg}}; border:1px solid {{T.chipBorder}}; color:{{T.goldInk}}; font-size:14px;">{{themeIcon}}</button>
+          <button onClick="{{toggleSound}}" style="cursor:pointer; height:34px; padding:0 12px; border-radius:999px; background:{{T.chipBg}}; border:1px solid {{T.chipBorder}}; color:{{T.goldInk}}; font-size:13px; font-weight:700; font-family:'PT Sans',sans-serif;">{{soundLabel}}</button>
+          <button onClick="{{closeStory}}" style="cursor:pointer; width:34px; height:34px; border-radius:50%; background:{{T.chipBg}}; border:1px solid {{T.chipBorder}}; color:{{T.goldInk}}; font-size:15px; line-height:1;" style-hover="background:rgba(232,197,106,0.25);">✕</button>
+        </div>
+      </div>
+
+      <!-- ===== PHASE: story beats ===== -->
+      <sc-if value="{{phaseStory}}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+          <!-- tap zones -->
+          <div onClick="{{beatBack}}" style="position:absolute; top:0; bottom:0; left:0; width:32%; z-index:1; cursor:pointer;"></div>
+          <div onClick="{{beatForward}}" style="position:absolute; top:0; bottom:0; right:0; width:68%; z-index:1; cursor:pointer;"></div>
+
+          <div style="position:relative; z-index:2; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; pointer-events:none;">
+            <div style="font-size:13px; letter-spacing:3px; text-transform:uppercase; color:{{T.goldInk}}; margin-bottom:22px; display:flex; align-items:center; gap:10px;"><span style="display:inline-block; width:7px; height:7px; transform:rotate(45deg); background:#E8C56A;"></span>{{beatLabel}}<span style="display:inline-block; width:7px; height:7px; transform:rotate(45deg); background:#E8C56A;"></span></div>
+
+            <sc-if value="{{beatIsVideo}}" hint-placeholder-val="{{ false }}">
+              <sc-if value="{{sel.video}}" hint-placeholder-val="{{ false }}">
+                <video src="{{sel.video}}" controls="{{true}}" onClick="{{stopBeatNav}}" style="pointer-events:auto; width:min(640px, 92vw); aspect-ratio:16/9; border-radius:16px; background:#000;"></video>
+              </sc-if>
+              <sc-if value="{{noVideo}}" hint-placeholder-val="{{ true }}">
+                <div style="width:min(640px, 92vw); aspect-ratio:16/9; border-radius:16px; border:1.5px dashed rgba(232,197,106,0.45); background:{{T.videoBg}}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:20px;">
+                  <div style="width:64px; height:64px; border-radius:50%; background:rgba(232,197,106,0.14); border:2px solid #E8C56A; display:flex; align-items:center; justify-content:center; font-size:22px; color:#F0C96A; animation:glowPulse 2.4s ease infinite;">▶</div>
+                  <div style="font-family:'Playfair Display',serif; font-size:17px; color:{{T.headline}};">AI бейне-кеңес: {{sel.display}} — {{sel.title}}</div>
+                  <div style="font-size:13px; color:{{T.textMuted}};">Бейне осы жерге қосылады</div>
+                </div>
+              </sc-if>
+            </sc-if>
+
+            <sc-if value="{{beatIsText}}" hint-placeholder-val="{{ true }}">
+              <div style="max-width:760px; font-family:'Playfair Display',serif; font-size:clamp(21px, 3.2vw, 32px); line-height:1.6; color:{{T.headline}}; min-height:3.2em;">{{beatText}}<span style="display:inline-block; width:3px; height:1em; background:#E8C56A; margin-left:4px; vertical-align:-0.15em; animation:caretBlink 0.8s steps(1) infinite;"></span></div>
+            </sc-if>
+
+            <sc-if value="{{beatIsChallenge}}" hint-placeholder-val="{{ false }}">
+              <div style="max-width:680px;">
+                <div style="font-family:'Playfair Display',serif; font-size:clamp(22px, 3.4vw, 34px); line-height:1.5; color:{{T.headline}};">{{beatText}}<span style="display:inline-block; width:3px; height:1em; background:#E8C56A; margin-left:4px; vertical-align:-0.15em; animation:caretBlink 0.8s steps(1) infinite;"></span></div>
+                <button onClick="{{toQuiz}}" style="position:relative; z-index:2; margin-top:34px; cursor:pointer; font-family:'PT Sans',sans-serif; font-size:17px; font-weight:700; padding:16px 38px; border-radius:12px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23; letter-spacing:0.5px; animation:popIn 0.5s 0.3s cubic-bezier(0.22,1,0.36,1) both;" style-hover="transform:translateY(-2px); box-shadow:0 12px 34px rgba(232,197,106,0.35);">Сынаққа дайынмын →</button>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="position:relative; z-index:2; display:flex; align-items:center; justify-content:center; gap:18px; padding:0 24px 26px;">
+            <button onClick="{{beatBack}}" style="cursor:pointer; width:44px; height:44px; border-radius:50%; background:{{T.chipBg}}; border:1px solid rgba(232,197,106,0.35); color:{{T.goldInk}}; font-size:16px;" style-hover="background:rgba(232,197,106,0.15);">◂</button>
+            <div style="font-size:13px; color:{{T.textMuted}}; letter-spacing:1px;">{{beatNum}} / {{beatTotal}}</div>
+            <button onClick="{{beatForward}}" style="cursor:pointer; width:44px; height:44px; border-radius:50%; background:rgba(232,197,106,0.14); border:1px solid rgba(232,197,106,0.5); color:#F0C96A; font-size:16px;" style-hover="background:rgba(232,197,106,0.3);">▸</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== PHASE: quiz ===== -->
+      <sc-if value="{{phaseQuiz}}" hint-placeholder-val="{{ false }}">
+        <div style="position:relative; z-index:2; flex:1; overflow-y:auto; display:flex; flex-direction:column; align-items:center; padding:26px 24px 30px;">
+          <div style="width:min(720px, 100%);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div style="font-size:13px; letter-spacing:1.5px; text-transform:uppercase; color:{{T.textMuted}};">Сұрақ {{qNum}} / {{qTotal}}</div>
+              <div style="font-size:13px; color:{{T.goldInk}}; font-weight:700;">Ұпай: {{score}}</div>
+            </div>
+            <div style="height:4px; border-radius:2px; background:rgba(232,197,106,0.15); overflow:hidden; margin-bottom:22px;"><div style="height:100%; background:linear-gradient(90deg,#B4543E,#E8C56A); width:{{quizPct}}; transition:width 0.3s;"></div></div>
+
+            <div style="font-family:'Playfair Display',serif; font-size:clamp(19px,3vw,24px); line-height:1.5; color:{{T.headline}}; margin-bottom:18px;">{{questionText}}</div>
+
+            <!-- poll result -->
+            <sc-if value="{{pollOn}}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid rgba(232,197,106,0.3); border-radius:12px; padding:14px 18px; margin-bottom:16px; background:{{T.cardBg}};">
+                <div style="font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; color:{{T.goldInk}}; margin-bottom:10px;">Халық даусы</div>
+                <div style="display:flex; flex-direction:column; gap:7px;">
+                  <sc-for list="{{pollBars}}" as="p" hint-placeholder-count="4">
+                    <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:{{T.textSecondary}};">
+                      <span style="font-weight:700; width:18px; color:{{p.color}};">{{p.letter}}</span>
+                      <div style="flex:1; height:8px; border-radius:4px; background:rgba(232,197,106,0.12); overflow:hidden;"><div style="height:100%; border-radius:4px; background:linear-gradient(90deg,#B4543E,#E8C56A); width:{{p.pct}}; transition:width 0.6s ease;"></div></div>
+                      <span style="width:38px; text-align:right;">{{p.pct}}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+                <button onClick="{{o.pick}}" style="cursor:pointer; text-align:left; font-family:'PT Sans',sans-serif; font-size:15px; line-height:1.5; padding:14px 18px; border-radius:12px; transition:all 0.2s; background:{{o.bg}}; color:{{o.fg}}; border:1.5px solid {{o.bd}}; text-decoration:{{o.deco}};" style-hover="border-color:rgba(232,197,106,0.7);"><span style="font-weight:700; margin-right:10px;">{{o.letter}}</span>{{o.text}}</button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{shieldMsgOn}}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:14px; font-size:14.5px; font-weight:700; color:#7FB4E8; animation:popIn 0.3s ease both;">{{shieldMsg}}</div>
+            </sc-if>
+
+            <sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+                <div style="font-size:15px; font-weight:700; color:{{feedbackColor}};">{{feedbackText}}</div>
+                <button onClick="{{nextQuestion}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:12px 26px; border-radius:10px; border:1px solid rgba(232,197,106,0.5); background:rgba(232,197,106,0.12); color:#F0C96A;" style-hover="background:rgba(232,197,106,0.28);">{{nextLabel}}</button>
+              </div>
+            </sc-if>
+
+            <!-- Jokers -->
+            <div style="margin-top:26px; border-top:1px solid rgba(232,197,106,0.15); padding-top:16px;">
+              <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:{{T.textMuted}}; margin-bottom:10px;">Джокерлер — әр сынақта бір-ақ рет</div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <sc-for list="{{jokers}}" as="j" hint-placeholder-count="3">
+                  <button onClick="{{j.use}}" style="cursor:pointer; flex:1; min-width:150px; text-align:left; font-family:'PT Sans',sans-serif; padding:12px 14px; border-radius:12px; background:{{T.cardBg}}; border:1.5px solid {{j.bd}}; transition:all 0.2s;" style-hover="transform:translateY(-2px); border-color:rgba(232,197,106,0.8);">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; transform:rotate(45deg); border:1.5px solid {{j.glyphBd}}; color:{{j.nameColor}}; font-weight:700; font-size:12px;"><span style="transform:rotate(-45deg);">{{j.glyph}}</span></span>
+                      <span style="font-size:14px; font-weight:700; color:{{j.nameColor}};">{{j.name}}</span>
+                    </div>
+                    <div style="font-size:12px; color:{{T.textMuted}}; margin-top:6px; line-height:1.4;">{{j.desc}}</div>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ===== PHASE: result ===== -->
+      <sc-if value="{{phaseDone}}" hint-placeholder-val="{{ false }}">
+        <div style="position:relative; z-index:2; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center;">
+          <div style="position:relative; display:inline-block;">
+            <sc-if value="{{perfect}}" hint-placeholder-val="{{ false }}">
+              <span style="position:absolute; top:-14px; left:-30px; font-size:20px; color:#F6D98C; animation:sparkle 1.6s ease infinite;">✦</span>
+              <span style="position:absolute; top:10px; right:-36px; font-size:14px; color:#F0C96A; animation:sparkle 1.6s 0.5s ease infinite;">✦</span>
+              <span style="position:absolute; bottom:-8px; left:10px; font-size:16px; color:#E8C56A; animation:sparkle 1.6s 1s ease infinite;">✦</span>
+            </sc-if>
+            <div style="font-family:'Cinzel',serif; font-size:clamp(56px,9vw,84px); font-weight:700; color:#F0C96A; text-shadow:0 0 30px rgba(240,201,106,0.5); line-height:1;">{{score}}<span style="font-size:0.45em; color:#9AA3C0;"> / {{qTotal}}</span></div>
+          </div>
+          <div style="font-family:'Playfair Display',serif; font-size:clamp(20px,3vw,26px); color:{{T.headline}}; margin-top:18px;">{{resultTitle}}</div>
+          <p style="font-size:15px; color:{{T.textSecondary}}; margin:8px auto 10px; max-width:440px; line-height:1.6;">{{resultMsg}}</p>
+          <sc-if value="{{rankUpOn}}" hint-placeholder-val="{{ false }}">
+            <div style="margin:10px 0 4px; font-size:16px; font-weight:700; color:#F0C96A; background:rgba(232,197,106,0.12); border:1px solid rgba(232,197,106,0.45); border-radius:999px; padding:10px 24px; animation:popIn 0.5s 0.3s cubic-bezier(0.22,1,0.36,1) both;">{{rankUpMsg}}</div>
+          </sc-if>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:22px;">
+            <button onClick="{{retryQuiz}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 24px; border-radius:11px; border:1px solid rgba(232,197,106,0.45); background:transparent; color:#E8C56A;" style-hover="background:rgba(232,197,106,0.12);">↺ Қайталау</button>
+            <sc-if value="{{hasNextYear}}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{openNextYear}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 26px; border-radius:11px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23;" style-hover="transform:translateY(-2px); box-shadow:0 10px 26px rgba(232,197,106,0.3);">Келесі белес: {{nextYearDisplay}} →</button>
+            </sc-if>
+            <sc-if value="{{noNextYear}}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{closeStory}}" style="cursor:pointer; font-family:'PT Sans',sans-serif; font-size:15px; font-weight:700; padding:13px 26px; border-radius:11px; border:none; background:linear-gradient(90deg,#B4543E,#E8C56A); color:#0A0F23;">Дәуірді аяқтау ✓</button>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startGrade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,&quot;10&quot;,&quot;11&quot;],&quot;default&quot;:&quot;7&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Баптау&quot;},&quot;embers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Баптау&quot;}}">
+const LS_KEY = "tarihtalk-progress-v1";
+const RANKS = [
+  { min: 17, name: "Хан" },
+  { min: 11, name: "Би" },
+  { min: 5, name: "Жырау" },
+  { min: 0, name: "Шәкірт" }
+];
+
+class Component extends DCLogic {
+  state = {
+    DATA: null, FIGURES: [], grade: null, section: "years", query: "", sound: true, theme: "dark", done: {},
+    figureOpen: null,
+    story: null, phase: "story", beat: 0, chars: 0,
+    qi: 0, picked: null, score: 0,
+    used: { fifty: false, poll: false, shield: false },
+    removed: [], poll: null, shieldOn: false, shieldMsg: "",
+    rankUpMsg: ""
+  };
+
+  componentDidMount() {
+    import('./data.js').then(m => this.setState({ DATA: m.DATA || m.default, FIGURES: m.FIGURES || [] }));
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
+      if (saved && typeof saved === "object") this.setState({ done: saved });
+    } catch (e) {}
+    try {
+      const t = localStorage.getItem(LS_KEY + "-theme");
+      if (t === "light" || t === "dark") this.setState({ theme: t });
+    } catch (e) {}
+    this.onKey = (e) => {
+      if (e.key === "Escape") this.setState({ story: null });
+      if (this.state.story && this.state.phase === "story") {
+        if (e.key === "ArrowRight") this.forward();
+        if (e.key === "ArrowLeft") this.back();
+      }
+    };
+    window.addEventListener("keydown", this.onKey);
+    this.onScroll = () => { if (this.orn1) this.orn1.style.transform = "translateY(" + (window.scrollY * 0.08) + "px)"; };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.onKey);
+    window.removeEventListener("scroll", this.onScroll);
+    if (this.typeTimer) clearInterval(this.typeTimer);
+  }
+
+  // ---------- sound (WebAudio, dombra-ish pentatonic plucks) ----------
+  snd(kind) {
+    if (!this.state.sound) return;
+    try {
+      this.ac = this.ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (this.ac.state === "suspended") this.ac.resume();
+      const t = this.ac.currentTime;
+      const play = (f, dt, dur, type, g) => {
+        const o = this.ac.createOscillator(), ga = this.ac.createGain();
+        o.type = type || "triangle"; o.frequency.value = f;
+        ga.gain.setValueAtTime(0.0001, t + dt);
+        ga.gain.exponentialRampToValueAtTime(g || 0.09, t + dt + 0.012);
+        ga.gain.exponentialRampToValueAtTime(0.0001, t + dt + (dur || 0.22));
+        o.connect(ga); ga.connect(this.ac.destination);
+        o.start(t + dt); o.stop(t + dt + (dur || 0.22) + 0.05);
+      };
+      // pentatonic: G4 A4 C5 D5 E5 G5
+      if (kind === "pluck") play(392, 0, 0.28);
+      else if (kind === "next") { play(523, 0, 0.16); }
+      else if (kind === "back") { play(440, 0, 0.16); }
+      else if (kind === "open") { play(392, 0, 0.18); play(523, 0.1, 0.18); play(659, 0.2, 0.3); }
+      else if (kind === "correct") { play(523, 0, 0.12); play(659, 0.1, 0.24); }
+      else if (kind === "wrong") { play(147, 0, 0.35, "sawtooth", 0.05); }
+      else if (kind === "joker") { play(659, 0, 0.1); play(784, 0.09, 0.1); play(988, 0.18, 0.28); }
+      else if (kind === "win") { play(392, 0, 0.15); play(523, 0.12, 0.15); play(659, 0.24, 0.15); play(784, 0.36, 0.4); }
+    } catch (e) {}
+  }
+
+  // ---------- data helpers ----------
+  data() { return this.state.DATA || []; }
+  currentGrade() { return this.state.grade ?? String(this.props.startGrade ?? "7"); }
+  findYear(id) {
+    for (const g of this.data()) { const y = g.years.find(y => y.id === id); if (y) return { g, y }; }
+    return null;
+  }
+  beatsOf(hit) {
+    const b = [{ type: "text", label: "Жыл сөйлейді", text: "Мен — " + hit.y.display + " жылмын. " + hit.y.summary }];
+    b.push({ type: "video", label: "Бейне-кеңес", text: "" });
+    hit.y.facts.forEach((f, i) => b.push({ type: "text", label: "Дерек " + (i + 1), text: f }));
+    b.push({ type: "challenge", label: "Сынақ алдында", text: "Мен саған сырымды аштым. Енді мен СЕНЕН сұраймын — дайынсың ба?" });
+    return b;
+  }
+
+  // ---------- typewriter ----------
+  startType(len) {
+    if (this.typeTimer) clearInterval(this.typeTimer);
+    this.setState({ chars: 0 });
+    this.typeTimer = setInterval(() => {
+      const n = this.state.chars + 2;
+      if (n >= len) { clearInterval(this.typeTimer); this.typeTimer = null; this.setState({ chars: len }); }
+      else this.setState({ chars: n });
+    }, 16);
+  }
+
+  setBeat(i, sndKind) {
+    const hit = this.findYear(this.state.story);
+    if (!hit) return;
+    const beats = this.beatsOf(hit);
+    if (i < 0 || i >= beats.length) return;
+    this.setState({ beat: i });
+    this.snd(sndKind || "next");
+    const b = beats[i];
+    if (b.type === "text" || b.type === "challenge") this.startType(b.text.length);
+    else { if (this.typeTimer) clearInterval(this.typeTimer); this.setState({ chars: 0 }); }
+  }
+
+  forward() {
+    const hit = this.findYear(this.state.story);
+    if (!hit) return;
+    const beats = this.beatsOf(hit);
+    const b = beats[this.state.beat];
+    const len = (b.text || "").length;
+    if ((b.type === "text" || b.type === "challenge") && this.state.chars < len) {
+      if (this.typeTimer) { clearInterval(this.typeTimer); this.typeTimer = null; }
+      this.setState({ chars: len });
+      return;
+    }
+    if (this.state.beat < beats.length - 1) this.setBeat(this.state.beat + 1);
+    else this.toQuiz();
+  }
+  back() {
+    if (this.state.beat > 0) {
+      this.setBeat(this.state.beat - 1, "back");
+      if (this.typeTimer) { clearInterval(this.typeTimer); this.typeTimer = null; }
+      const hit = this.findYear(this.state.story);
+      const b = this.beatsOf(hit)[this.state.beat - 0];
+    }
+  }
+
+  openYear(id) {
+    const hit = this.findYear(id);
+    if (!hit) return;
+    this.setState({
+      story: id, grade: hit.g.grade, query: "", phase: "story", beat: 0, chars: 0,
+      qi: 0, picked: null, score: 0, used: { fifty: false, poll: false, shield: false },
+      removed: [], poll: null, shieldOn: false, shieldMsg: "", rankUpMsg: ""
+    });
+    this.snd("open");
+    this.startType(this.beatsOf(hit)[0].text.length);
+  }
+
+  toQuiz() {
+    if (this.typeTimer) { clearInterval(this.typeTimer); this.typeTimer = null; }
+    this.setState({ phase: "quiz", qi: 0, picked: null, score: 0, used: { fifty: false, poll: false, shield: false }, removed: [], poll: null, shieldOn: false, shieldMsg: "" });
+    this.snd("next");
+  }
+
+  rankOf(n) { return RANKS.find(r => n >= r.min).name; }
+
+  findFigure(id) {
+    for (const g of this.state.FIGURES) { const p = g.people.find(p => p.id === id); if (p) return p; }
+    return null;
+  }
+
+  theme() {
+    const dark = this.state.theme !== "light";
+    return dark ? {
+      dark: true,
+      pageBg: "radial-gradient(1200px 700px at 75% -10%, rgba(46,68,130,0.55), transparent 60%), radial-gradient(900px 600px at 10% 110%, rgba(140,62,44,0.28), transparent 60%), linear-gradient(180deg, #0A0F23 0%, #0C1330 55%, #0A0E1F 100%)",
+      ornOpacity: "0.07", ornStroke: "%23E8C56A",
+      text: "#EDE6D3", headline: "#F2E7C9", textSecondary: "#B9C0D8", textMuted: "#9AA3C0",
+      gold: "#E8C56A", goldInk: "#F0C96A", onGold: "#0A0F23",
+      headerBg: "rgba(10,15,35,0.75)", headerBorder: "rgba(232,197,106,0.18)",
+      chipBg: "rgba(232,197,106,0.1)", chipBorder: "rgba(232,197,106,0.3)",
+      inputBg: "rgba(21,30,58,0.8)", inputBorder: "rgba(232,197,106,0.25)",
+      cardBg: "rgba(21,30,58,0.72)", cardBorder: "rgba(232,197,106,0.22)",
+      trackBg: "rgba(232,197,106,0.15)",
+      numeral: "#E8C56A", numeralShadow: "0 0 18px rgba(232,197,106,0.25)",
+      overlayBg: "radial-gradient(1000px 600px at 50% -10%, rgba(46,68,130,0.5), transparent 60%), #070B1A",
+      overlaySolid: "linear-gradient(180deg, #131C38, #0E1530)",
+      ghostNumeral: "rgba(232,197,106,0.05)", videoBg: "radial-gradient(500px 260px at 50% 40%, rgba(46,68,130,0.5), rgba(10,15,35,0.9))"
+    } : {
+      dark: false,
+      pageBg: "radial-gradient(1200px 700px at 75% -10%, rgba(120,145,210,0.16), transparent 60%), radial-gradient(900px 600px at 10% 110%, rgba(196,120,90,0.14), transparent 60%), linear-gradient(180deg, #FBF5E6 0%, #F5EBD3 55%, #F0E6C9 100%)",
+      ornOpacity: "0.09", ornStroke: "%238A6A2E",
+      text: "#3A3220", headline: "#2A2415", textSecondary: "#5E5540", textMuted: "#8A7F63",
+      gold: "#B8892E", goldInk: "#9C6B1F", onGold: "#2A2415",
+      headerBg: "rgba(251,245,230,0.82)", headerBorder: "rgba(156,107,31,0.22)",
+      chipBg: "rgba(184,137,46,0.12)", chipBorder: "rgba(156,107,31,0.32)",
+      inputBg: "rgba(255,253,246,0.9)", inputBorder: "rgba(156,107,31,0.28)",
+      cardBg: "rgba(255,253,246,0.72)", cardBorder: "rgba(156,107,31,0.25)",
+      trackBg: "rgba(156,107,31,0.15)",
+      numeral: "#A9761F", numeralShadow: "0 0 14px rgba(156,107,31,0.18)",
+      overlayBg: "radial-gradient(1000px 600px at 50% -10%, rgba(120,145,210,0.18), transparent 60%), #FBF5E6",
+      overlaySolid: "linear-gradient(180deg, #FFFDF6, #F5EBD3)",
+      ghostNumeral: "rgba(156,107,31,0.08)", videoBg: "radial-gradient(500px 260px at 50% 40%, rgba(120,145,210,0.18), rgba(255,253,246,0.9))"
+    };
+  }
+
+  markDone(id) {
+    const prevCount = Object.keys(this.state.done).filter(k => this.state.done[k]).length;
+    if (this.state.done[id]) return;
+    const done = { ...this.state.done, [id]: true };
+    const newCount = prevCount + 1;
+    const prevRank = this.rankOf(prevCount), newRank = this.rankOf(newCount);
+    if (newRank !== prevRank) this.setState({ rankUpMsg: "Жаңа дәреже: " + newRank + "!" });
+    this.setState({ done });
+    try { localStorage.setItem(LS_KEY, JSON.stringify(done)); } catch (e) {}
+  }
+
+  renderVals() {
+    const T = this.theme();
+    const DATA = this.data();
+    const gradeId = this.currentGrade();
+    const gradeData = DATA.find(g => g.grade === gradeId) || DATA[0] || { era: "", range: "", intro: "", years: [] };
+    const done = this.state.done;
+    const q = this.state.query.trim().toLowerCase();
+
+    const sections = [
+      { key: "years", label: "Жылдар", icon: "🕐" },
+      { key: "figures", label: "Тұлғалар", icon: "☰" },
+      { key: "places", label: "Жер-су аттары", icon: "◈" }
+    ].map(s => {
+      const active = this.state.section === s.key;
+      return {
+        label: s.label, icon: s.icon,
+        open: () => this.setState({ section: s.key, query: "" }),
+        bg: active ? "linear-gradient(90deg,#2E4482,#1B2952)" : T.cardBg,
+        fg: active ? "#F2E7C9" : T.textSecondary,
+        bd: active ? T.gold : T.cardBorder
+      };
+    });
+
+    const grades = DATA.map(g => {
+      const active = g.grade === gradeId;
+      return {
+        label: g.grade,
+        open: () => this.setState({ grade: g.grade, query: "" }),
+        bg: active ? "linear-gradient(90deg,#B4543E,#E8C56A)" : T.cardBg,
+        fg: active ? T.onGold : T.textSecondary,
+        bd: active ? "transparent" : T.cardBorder
+      };
+    });
+
+    const years = gradeData.years.map((y, i) => ({
+      display: y.display, title: y.title, teaser: y.teaser,
+      step: i + 1,
+      done: !!done[y.id],
+      justify: i % 2 === 0 ? "flex-start" : "flex-end",
+      tilt: i % 2 === 0 ? "-2deg" : "2deg",
+      hasNext: i < gradeData.years.length - 1,
+      connPath: i % 2 === 0 ? "M 22 0 C 22 18, 78 12, 78 30" : "M 78 0 C 78 18, 22 12, 22 30",
+      open: () => this.openYear(y.id)
+    }));
+
+    let results = [];
+    if (q) {
+      for (const g of DATA) for (const y of g.years) {
+        const hay = (y.display + " " + y.title + " " + y.teaser + " " + y.summary).toLowerCase();
+        if (hay.includes(q)) results.push({
+          display: y.display, title: y.title, gradeLabel: g.grade, era: g.era,
+          open: () => this.openYear(y.id)
+        });
+      }
+    }
+
+    const figuresGroup = this.state.FIGURES.find(g => g.grade === gradeId);
+    const figuresForGrade = figuresGroup ? figuresGroup.people : [];
+    const figSel = this.state.figureOpen ? (this.findFigure(this.state.figureOpen) || {}) : {};
+
+    const yearTotal = DATA.reduce((n, g) => n + g.years.length, 0) || 1;
+    const doneTotal = Object.keys(done).filter(k => done[k]).length;
+    const gradeDone = gradeData.years.filter(y => done[y.id]).length;
+
+    // ---------- story ----------
+    const hit = this.state.story ? this.findYear(this.state.story) : null;
+    let sel = {}, beats = [], beatBars = [], curBeat = null, beatText = "";
+    let quiz = [], options = [], questionText = "", pollBars = [];
+    let hasNextYear = false, nextYearDisplay = "";
+    if (hit) {
+      sel = { display: hit.y.display, title: hit.y.title, gradeLabel: hit.g.grade, video: hit.y.video || "" };
+      beats = this.beatsOf(hit);
+      curBeat = beats[this.state.beat];
+      beatText = (curBeat.text || "").slice(0, this.state.chars);
+      const inQuiz = this.state.phase !== "story";
+      beatBars = beats.map((b, i) => ({
+        bg: inQuiz || i < this.state.beat ? "#E8C56A" : (i === this.state.beat ? "rgba(232,197,106,0.85)" : "rgba(232,197,106,0.18)")
+      }));
+      quiz = hit.y.quiz;
+      const cur = quiz[this.state.qi];
+      if (cur) {
+        questionText = cur.q;
+        const letters = ["А", "Ә", "Б", "В"];
+        options = cur.o.map((text, i) => {
+          const picked = this.state.picked;
+          const removed = this.state.removed.includes(i);
+          let bg = T.cardBg, fg = T.text, bd = T.cardBorder, deco = "none";
+          if (removed) { bg = T.dark ? "rgba(21,30,58,0.35)" : "rgba(255,253,246,0.35)"; fg = T.textMuted; bd = "rgba(232,197,106,0.08)"; deco = "line-through"; }
+          if (picked !== null) {
+            if (i === cur.a) { bg = T.dark ? "rgba(90,140,90,0.25)" : "rgba(92,138,96,0.18)"; bd = T.dark ? "#7FBF8A" : "#3F7A4C"; fg = T.dark ? "#CFEBD4" : "#2C5735"; }
+            else if (i === picked) { bg = T.dark ? "rgba(180,84,62,0.25)" : "rgba(180,84,62,0.16)"; bd = T.dark ? "#C96B54" : "#9E4630"; fg = T.dark ? "#F0CFC6" : "#7A3423"; }
+          }
+          return {
+            text, letter: letters[i] || "•", bg, fg, bd, deco,
+            pick: () => {
+              if (this.state.picked !== null || this.state.removed.includes(i)) return;
+              if (i !== cur.a && this.state.shieldOn) {
+                this.setState({ shieldOn: false, removed: [...this.state.removed, i], shieldMsg: "⛨ Батыр қалқаны қорғады! Тағы бір мүмкіндік бар." });
+                this.snd("joker");
+                return;
+              }
+              this.setState({ picked: i, score: this.state.score + (i === cur.a ? 1 : 0), shieldMsg: "" });
+              this.snd(i === cur.a ? "correct" : "wrong");
+            }
+          };
+        });
+        if (this.state.poll) pollBars = this.state.poll.map((p, i) => ({ letter: letters[i], pct: p + "%", color: T.goldInk }));
+      }
+      const idx = hit.g.years.findIndex(y => y.id === hit.y.id);
+      if (idx >= 0 && idx < hit.g.years.length - 1) { hasNextYear = true; nextYearDisplay = hit.g.years[idx + 1].display; }
+    }
+
+    // jokers
+    const mkJoker = (key, glyph, name, desc, fn) => {
+      const used = this.state.used[key];
+      const usable = !used && this.state.picked === null;
+      return {
+        glyph, name, desc: used ? "Қолданылды" : desc,
+        bd: used ? "rgba(154,163,192,0.22)" : "rgba(232,197,106,0.45)",
+        nameColor: used ? T.textMuted : T.goldInk,
+        glyphBd: used ? "rgba(154,163,192,0.35)" : T.gold,
+        use: () => { if (!usable) return; fn(); }
+      };
+    };
+    const jokers = hit && quiz[this.state.qi] ? [
+      mkJoker("fifty", "½", "Би кеңесі — 50/50", "Екі қате жауапты алып тастайды", () => {
+        const cur = quiz[this.state.qi];
+        const wrongs = cur.o.map((_, i) => i).filter(i => i !== cur.a && !this.state.removed.includes(i));
+        const toRemove = wrongs.length <= 1 ? wrongs : wrongs.sort(() => Math.random() - 0.5).slice(0, cur.o.length === 2 ? 0 : 2);
+        if (!toRemove.length) return;
+        this.setState({ used: { ...this.state.used, fifty: true }, removed: [...this.state.removed, ...toRemove] });
+        this.snd("joker");
+      }),
+      mkJoker("poll", "▥", "Халық даусы", "Көпшілік қалай дауыс берер еді?", () => {
+        const cur = quiz[this.state.qi];
+        const main = 55 + Math.floor(Math.random() * 25);
+        let rest = 100 - main;
+        const others = cur.o.map((_, i) => i).filter(i => i !== cur.a);
+        const poll = cur.o.map(() => 0);
+        poll[cur.a] = main;
+        others.forEach((i, k) => {
+          const v = k === others.length - 1 ? rest : Math.floor(Math.random() * (rest + 1));
+          poll[i] = v; rest -= v;
+        });
+        this.setState({ used: { ...this.state.used, poll: true }, poll });
+        this.snd("joker");
+      }),
+      mkJoker("shield", "⛨", "Батыр қалқаны", "Бір қате жауаптан қорғайды", () => {
+        this.setState({ used: { ...this.state.used, shield: true }, shieldOn: true, shieldMsg: "⛨ Қалқан белсенді — бір қатеден қорғайды." });
+        this.snd("joker");
+      })
+    ] : [];
+
+    const isLast = hit ? this.state.qi >= quiz.length - 1 : false;
+    const pct = Math.round((this.state.qi + (this.state.picked !== null ? 1 : 0)) / Math.max(quiz.length, 1) * 100);
+    const scorePct = quiz.length ? this.state.score / quiz.length : 0;
+
+    let resultTitle = "Жарайсың!", resultMsg = "Тағы да қайталап көрсең, нәтижең жақсара түседі.";
+    if (scorePct === 1) { resultTitle = "Керемет! Жыл толық бағындырылды"; resultMsg = "Барлық сұраққа қатесіз жауап бердің. Тарих сенімен сөйлесіп тұр!"; }
+    else if (scorePct >= 0.6) { resultTitle = "Жақсы нәтиже!"; resultMsg = "Негізгі оқиғаларды жақсы білесің. Қателескен сұрақтарды қайта қарап шық."; }
+    else { resultTitle = "Тағы бір мәрте тыңдап көр"; resultMsg = "Жылдың әңгімесін қайта оқып, сынақты қайталап көрсең — бәрі шығады."; }
+
+    return {
+      ornRef1: el => { this.orn1 = el; },
+      embersOn: this.props.embers ?? true,
+      T,
+      themeIcon: this.state.theme === "light" ? "☾" : "☀",
+      toggleTheme: () => {
+        const t = this.state.theme === "light" ? "dark" : "light";
+        this.setState({ theme: t });
+        try { localStorage.setItem(LS_KEY + "-theme", t); } catch (e) {}
+      },
+      sections,
+      sectionYears: this.state.section === "years",
+      sectionFigures: this.state.section === "figures",
+      sectionPlaces: this.state.section === "places",
+      searchingAndYears: q.length > 0 && this.state.section === "years",
+      notSearchingAndYears: q.length === 0 && this.state.section === "years",
+      gradeLabelCur: gradeId,
+      figures: figuresForGrade.map(f => ({ ...f, open: () => this.setState({ figureOpen: f.id }), imgRef: el => { if (el && f.image) el.src = f.image; } })),
+      hasFigures: figuresForGrade.length > 0,
+      noFigures: figuresForGrade.length === 0,
+      figureOpen: !!this.state.figureOpen,
+      closeFigure: () => this.setState({ figureOpen: null }),
+      fig: figSel,
+      figImgRef: el => { if (el && figSel.image) el.src = figSel.image; },
+      figFacts: (figSel.facts || []).map(t => ({ text: t })),
+      // header
+      rankName: this.rankOf(doneTotal),
+      query: this.state.query,
+      onQuery: e => this.setState({ query: e.target.value }),
+      doneTotal, yearTotal,
+      progressPct: Math.round(doneTotal / yearTotal * 100) + "%",
+      soundLabel: this.state.sound ? "♫ қосулы" : "♫ өшірулі",
+      toggleSound: () => { const s = !this.state.sound; this.setState({ sound: s }); if (s) { this.state.sound = s; this.snd("pluck"); } },
+      // tabs + hero
+      grades, eraTitle: gradeData.era, eraRange: gradeData.range, eraIntro: gradeData.intro,
+      gradeDone, gradeCount: gradeData.years.length,
+      // search
+      searching: q.length > 0, notSearching: q.length === 0,
+      results, resultCount: results.length,
+      noResults: q.length > 0 && results.length === 0,
+      // path
+      years,
+      // story overlay
+      storyOpen: !!hit,
+      closeStory: () => { if (this.typeTimer) clearInterval(this.typeTimer); this.setState({ story: null }); },
+      sel, beatBars,
+      phaseStory: this.state.phase === "story",
+      phaseQuiz: this.state.phase === "quiz",
+      phaseDone: this.state.phase === "done",
+      beatLabel: curBeat ? curBeat.label : "",
+      beatText,
+      beatIsText: curBeat ? curBeat.type === "text" : false,
+      beatIsVideo: curBeat ? curBeat.type === "video" : false,
+      noVideo: !(sel && sel.video),
+      stopBeatNav: e => e.stopPropagation(),
+      beatIsChallenge: curBeat ? curBeat.type === "challenge" : false,
+      beatNum: this.state.beat + 1, beatTotal: beats.length,
+      beatForward: () => this.forward(),
+      beatBack: () => this.back(),
+      toQuiz: () => this.toQuiz(),
+      // quiz
+      qNum: this.state.qi + 1, qTotal: quiz.length,
+      quizPct: pct + "%",
+      questionText, options, jokers,
+      pollOn: !!this.state.poll, pollBars,
+      shieldMsgOn: !!this.state.shieldMsg, shieldMsg: this.state.shieldMsg,
+      answered: this.state.picked !== null,
+      feedbackText: this.state.picked !== null && hit ? (this.state.picked === quiz[this.state.qi].a ? "✓ Дұрыс жауап!" : "✕ Қате. Дұрысы жасыл түспен көрсетілді.") : "",
+      feedbackColor: this.state.picked !== null && hit && this.state.picked === quiz[this.state.qi].a ? "#7FBF8A" : "#C96B54",
+      nextLabel: isLast ? "Нәтижені көру →" : "Келесі сұрақ →",
+      nextQuestion: () => {
+        if (isLast) { this.markDone(this.state.story); this.setState({ phase: "done" }); this.snd("win"); }
+        else { this.setState({ qi: this.state.qi + 1, picked: null, removed: [], poll: null, shieldOn: false, shieldMsg: "" }); this.snd("next"); }
+      },
+      // result
+      score: this.state.score,
+      perfect: scorePct === 1,
+      resultTitle, resultMsg,
+      rankUpOn: !!this.state.rankUpMsg, rankUpMsg: this.state.rankUpMsg,
+      retryQuiz: () => this.toQuiz(),
+      hasNextYear, noNextYear: !hasNextYear, nextYearDisplay,
+      openNextYear: () => {
+        if (!hit) return;
+        const idx = hit.g.years.findIndex(y => y.id === hit.y.id);
+        const next = hit.g.years[idx + 1];
+        if (next) this.openYear(next.id);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
